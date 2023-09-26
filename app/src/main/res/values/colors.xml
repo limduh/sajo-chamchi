@@ -10,4 +10,5 @@
     <color name="deep_dark_brown">#211917</color>
     <color name="gray">#D9D9D9</color>
     <color name="deep_gray">#8C8C8C</color>
+    <color name="transparency">#00FFFFFF</color>
 </resources>
