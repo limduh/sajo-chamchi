@@ -1,16 +1,21 @@
 package com.team4.sajochamchi.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
-import com.team4.sajochamchi.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.FragmentHomeBinding
 import com.team4.sajochamchi.ui.activity.WebViewActivity
 import com.team4.sajochamchi.ui.dialog.CategoriesDialog
 import com.team4.sajochamchi.ui.dialog.ViewDetailDialog
+import com.team4.sajochamchi.ui.viewmodel.HomeViewModel
+import com.team4.sajochamchi.ui.viewmodel.HomeViewModelFactory
+import com.team4.sajochamchi.ui.viewmodel.MainSharedViewModel
 
 
 class HomeFragment : Fragment() {
@@ -18,6 +23,11 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
         get() = _binding!!
+
+    private val homeViewModel: HomeViewModel by viewModels() {
+        HomeViewModelFactory(TotalRepositoryImpl(requireContext()))
+    }
+    private val mainSharedViewModel: MainSharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +40,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        initViewModels()
     }
 
     private fun initViews() = with(binding) {
@@ -51,7 +62,13 @@ class HomeFragment : Fragment() {
         }
 
         webViewActivityButton.setOnClickListener {
-            startActivity(WebViewActivity.newIntent(requireContext(),"test","https://www.youtube.com/"))
+            startActivity(
+                WebViewActivity.newIntent(
+                    requireContext(),
+                    "test",
+                    "https://www.youtube.com/"
+                )
+            )
         }
 
         categoriesDialogButton.setOnClickListener {
@@ -59,6 +76,18 @@ class HomeFragment : Fragment() {
 
             })
             dialog.show(this@HomeFragment.childFragmentManager, "Categories Dialog")
+        }
+    }
+
+    private fun initViewModels() {
+        with(homeViewModel) {
+
+        }
+
+        with(mainSharedViewModel) {
+            homeEvent.observe(viewLifecycleOwner) {
+
+            }
         }
     }
 
