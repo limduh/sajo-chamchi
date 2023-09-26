@@ -5,12 +5,13 @@ import android.os.Bundle
 import com.team4.sajochamchi.R
 import com.team4.sajochamchi.databinding.ActivityMainBinding
 import com.team4.sajochamchi.ui.fragment.HomeFragment
+import com.team4.sajochamchi.ui.fragment.SearchFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val homeFragment: HomeFragment = HomeFragment.newInstance()
-    //private val searchFragment : HomeFragment = HomeFragment.newInstance()
+    private val searchFragment: SearchFragment = SearchFragment.newInstance()
     //private val myPageFragment : HomeFragment = HomeFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +32,11 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.bottom_home -> {
                     fragmentManager.beginTransaction().replace(R.id.frame_layout, homeFragment)
+                        .commit()
+                }
+
+                R.id.bottom_search -> {
+                    fragmentManager.beginTransaction().replace(R.id.frame_layout, searchFragment)
                         .commit()
                 }
             }
