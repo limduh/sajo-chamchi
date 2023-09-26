@@ -54,8 +54,8 @@
                 android:layout_height="wrap_content"/>
 
             <Button
-                android:id="@+id/setting_view_dialog_button"
-                android:text="SETTING DIALOG"
+                android:id="@+id/categories_dialog_button"
+                android:text="CATEGORIES DIALOG"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/deep_dark_brown"

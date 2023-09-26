@@ -8,30 +8,23 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.team4.sajochamchi.databinding.DialogCategoriesBinding
 import com.team4.sajochamchi.databinding.DialogViewDetailBinding
 
 
-class ViewDetailDialog(private val clickEventListener: ClickEventListener) :
+class CategoriesDialog(private val eventListener: EventListener) :
     BottomSheetDialogFragment() {
 
     companion object {
-        fun newInstance(clickEventListener: ClickEventListener) =
-            ViewDetailDialog(clickEventListener)
+        fun newInstance(eventListener: EventListener) =
+            CategoriesDialog(eventListener)
     }
 
-    interface ClickEventListener {
-        //공유 버튼 클릭시 동작할 기능
-        fun shareButtonClicked()
-
-        //좋아요 버튼 클릭시 동작할 기능
-        fun favoriteButtonClicked()
-
-        //썸네일 이미지 클릭시 동작할 기능
-        fun thumbnailImageClicked()
+    interface EventListener {
     }
 
-    private var _binding: DialogViewDetailBinding? = null
-    private val binding: DialogViewDetailBinding
+    private var _binding: DialogCategoriesBinding? = null
+    private val binding: DialogCategoriesBinding
         get() = _binding!!
 
     override fun onCreateView(
@@ -39,7 +32,7 @@ class ViewDetailDialog(private val clickEventListener: ClickEventListener) :
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        _binding = DialogViewDetailBinding.inflate(inflater, container, false)
+        _binding = DialogCategoriesBinding.inflate(inflater, container, false)
         //dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         //layout 크기 조절
         binding.layout.layoutParams = ViewGroup.LayoutParams(
@@ -69,9 +62,6 @@ class ViewDetailDialog(private val clickEventListener: ClickEventListener) :
             dismiss()
         }
 
-        shareImageButton.setOnClickListener {
-            clickEventListener.shareButtonClicked()
-        }
         //드래그 방지
         try {
             val behavior = (dialog as BottomSheetDialog).behavior
