@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.team4.sajochamchi.databinding.FragmentMyPageBinding
+import com.team4.sajochamchi.ui.dialog.ViewDetailDialog
 
 class MyPageFragment : Fragment() {
     private var _binding : FragmentMyPageBinding? = null
@@ -26,7 +27,22 @@ class MyPageFragment : Fragment() {
     }
 
     private fun initViews() = with(binding){
+        detailDialogButton.setOnClickListener {
+            val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener{
+                override fun shareButtonClicked() {
 
+                }
+
+                override fun favoriteButtonClicked() {
+
+                }
+
+                override fun thumbnailImageClicked() {
+
+                }
+            })
+            dialog.show(this@MyPageFragment.childFragmentManager,"Detail Dialog")
+        }
     }
 
     override fun onDestroy() {
