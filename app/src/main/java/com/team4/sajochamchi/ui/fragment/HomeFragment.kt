@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.team4.sajochamchi.R
 import com.team4.sajochamchi.databinding.FragmentHomeBinding
+import com.team4.sajochamchi.ui.activity.WebViewActivity
 import com.team4.sajochamchi.ui.dialog.CategoriesDialog
 import com.team4.sajochamchi.ui.dialog.ViewDetailDialog
 
@@ -47,6 +48,10 @@ class HomeFragment : Fragment() {
                 }
             })
             dialog.show(this@HomeFragment.childFragmentManager, "Detail Dialog")
+        }
+
+        webViewActivityButton.setOnClickListener {
+            startActivity(WebViewActivity.newIntent(requireContext(),"test","https://www.youtube.com/"))
         }
 
         categoriesDialogButton.setOnClickListener {
