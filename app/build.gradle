@@ -6,6 +6,9 @@ plugins {
     id 'kotlin-kapt'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     namespace 'com.team4.sajochamchi'
     compileSdk 33
@@ -20,10 +23,18 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "SAMPLE_API_KEY", properties["API_KEY"]
+        }
+        debug {
+            buildConfigField "String", "SAMPLE_API_KEY", properties["API_KEY"]
         }
     }
     compileOptions {
