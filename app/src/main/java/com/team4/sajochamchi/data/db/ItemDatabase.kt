@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.team4.sajochamchi.data.dao.ItemDao
-import com.team4.sajochamchi.data.model.video.SaveItem
+import com.team4.sajochamchi.data.model.SaveItem
 
 
 @Database(entities = [SaveItem::class], version = 1)

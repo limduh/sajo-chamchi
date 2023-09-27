@@ -9,7 +9,7 @@ import com.team4.sajochamchi.data.model.video.toSaveItem
 import com.team4.sajochamchi.data.repository.TotalRepository
 import kotlinx.coroutines.launch
 
-class SearchViewModel(val repository: TotalRepository) : ViewModel() {
+class SearchViewModel(private val repository: TotalRepository) : ViewModel() {
 
     companion object{
         private const val TAG = "SearchViewModel"
