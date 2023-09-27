@@ -1,6 +1,7 @@
 package com.team4.sajochamchi.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.team4.sajochamchi.ui.dialog.ViewDetailDialog
 import com.team4.sajochamchi.ui.viewmodel.MainSharedViewModel
 import com.team4.sajochamchi.ui.viewmodel.MyPageViewModelFactory
 import com.team4.sajochamchi.ui.viewmodel.MypageViewModel
+import kotlin.math.log
 
 class MyPageFragment : Fragment() {
     private var _binding: FragmentMyPageBinding? = null
@@ -21,6 +23,7 @@ class MyPageFragment : Fragment() {
     private val mypageViewModel: MypageViewModel by viewModels {
         MyPageViewModelFactory(TotalRepositoryImpl(requireContext()))
     }
+
     private val mainSharedViewModel: MainSharedViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -58,7 +61,9 @@ class MyPageFragment : Fragment() {
 
     private fun initViewModels() {
         with(mypageViewModel) {
-
+            saveItems.observe(viewLifecycleOwner){ list->
+                Log.d(TAG, "initViewModels: ${list.size}")
+            }
         }
 
         with(mainSharedViewModel) {
@@ -75,6 +80,7 @@ class MyPageFragment : Fragment() {
 
 
     companion object {
+        private const val TAG = "MyPageFragment"
         fun newInstance() = MyPageFragment()
     }
 }
