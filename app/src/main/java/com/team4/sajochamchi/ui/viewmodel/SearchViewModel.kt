@@ -1,6 +1,8 @@
 package com.team4.sajochamchi.ui.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -13,6 +15,14 @@ class SearchViewModel(private val repository: TotalRepository) : ViewModel() {
 
     companion object{
         private const val TAG = "SearchViewModel"
+    }
+
+    private val _searchHistory : MutableLiveData<List<String>> = MutableLiveData()
+    val searchHistory : LiveData<List<String>>
+        get() = _searchHistory
+
+    init {
+        _searchHistory.value = repository.getSearchHistoryListPefs()
     }
 
     fun searchVideos(q:String) = viewModelScope.launch {

@@ -1,9 +1,12 @@
 package com.team4.sajochamchi.ui.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.team4.sajochamchi.data.model.SaveCategory
 import com.team4.sajochamchi.data.model.category.toSaveCategory
 import com.team4.sajochamchi.data.model.channel.toSaveChannel
 import com.team4.sajochamchi.data.model.video.toSaveItem
@@ -13,6 +16,14 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
     companion object{
         private const val TAG = "HomeViewModel"
+    }
+
+    private val _categories : MutableLiveData<List<SaveCategory>> = MutableLiveData()
+    val categories : LiveData<List<SaveCategory>>
+        get() = _categories
+
+    init {
+        _categories.value = repository.getCateoryListPefs()
     }
 
     fun getAllMostPopular() = viewModelScope.launch {

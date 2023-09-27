@@ -1,5 +1,6 @@
 package com.team4.sajochamchi.data.repository
 
+import com.team4.sajochamchi.data.model.SaveCategory
 import com.team4.sajochamchi.data.model.SaveItem
 import com.team4.sajochamchi.data.model.category.CategoryResponse
 import com.team4.sajochamchi.data.model.channel.ChannelResponse
@@ -25,4 +26,10 @@ interface TotalRepository {
     val allSaveItems : Flow<List<SaveItem>>
     suspend fun insert(saveItem: SaveItem)
     suspend fun delete(saveItem: SaveItem)
+
+    // SharedPreference
+    fun getCateoryListPefs(): List<SaveCategory>
+    fun saveCateoryListPrefs(list: List<SaveCategory>)
+    fun getSearchHistoryListPefs(): List<String>
+    fun saveSearchHistoryListPrefs(list: List<String>)
 }

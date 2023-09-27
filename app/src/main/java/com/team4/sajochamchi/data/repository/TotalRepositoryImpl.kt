@@ -5,6 +5,7 @@ import androidx.annotation.WorkerThread
 import com.team4.sajochamchi.data.api.RetrofitInstance
 import com.team4.sajochamchi.data.api.RetrofitInstance.api
 import com.team4.sajochamchi.data.db.ItemDatabase
+import com.team4.sajochamchi.data.model.SaveCategory
 import com.team4.sajochamchi.data.model.SaveItem
 import com.team4.sajochamchi.data.model.category.CategoryResponse
 import com.team4.sajochamchi.data.model.channel.ChannelResponse
@@ -18,7 +19,8 @@ class TotalRepositoryImpl(context: Context) : TotalRepository {
     private val mySharedPreferences: MySharedPreferences = MySharedPreferences(context)
     private val database = ItemDatabase.getDatabase(context)
     private val dao = database.getItemDao()
-    //use api
+
+    //use retrofit
     override suspend fun getAllMostPopular(pageToken: String): Response<VideoResponse> {
         return api.getAllMostPopular(pageToken = pageToken)
     }
@@ -46,8 +48,8 @@ class TotalRepositoryImpl(context: Context) : TotalRepository {
     }
 
 
+    //Room
     override val allSaveItems: Flow<List<SaveItem>> = dao.getAll()
-
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -59,5 +61,23 @@ class TotalRepositoryImpl(context: Context) : TotalRepository {
     @WorkerThread
     override suspend fun delete(saveItem: SaveItem) {
         dao.delete(saveItem)
+    }
+
+
+    // use sharedpreference
+    override fun getCateoryListPefs(): List<SaveCategory> {
+        return mySharedPreferences.getCateoryListPefs()
+    }
+
+    override fun saveCateoryListPrefs(list: List<SaveCategory>) {
+        mySharedPreferences.saveCateoryListPrefs(list)
+    }
+
+    override fun getSearchHistoryListPefs(): List<String> {
+        return mySharedPreferences.getSearchHistoryListPefs()
+    }
+
+    override fun saveSearchHistoryListPrefs(list: List<String>) {
+        mySharedPreferences.saveSearchHistoryListPrefs(list)
     }
 }
