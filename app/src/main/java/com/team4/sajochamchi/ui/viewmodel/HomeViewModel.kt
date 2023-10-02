@@ -20,17 +20,21 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
         private const val TAG = "HomeViewModel"
     }
 
-    private val _saveList: MutableLiveData<List<SaveItem>> = MutableLiveData()
-    val saveList: LiveData<List<SaveItem>>
-        get() = _saveList
-
-    private val _channel: MutableLiveData<List<SaveChannel>> = MutableLiveData()
-    val channel: LiveData<List<SaveChannel>>
-        get() = _channel
+    private val _popularItemList: MutableLiveData<List<SaveItem>> = MutableLiveData()
+    val popularItemList: LiveData<List<SaveItem>>
+        get() = _popularItemList
 
     private val _categories: MutableLiveData<List<SaveCategory>> = MutableLiveData()
     val categories: LiveData<List<SaveCategory>>
         get() = _categories
+
+    private val _categoryItemList: MutableLiveData<List<SaveItem>> = MutableLiveData()
+    val categoryItemList: LiveData<List<SaveItem>>
+        get() = _categoryItemList
+
+    private val _channelItemList: MutableLiveData<List<SaveChannel>> = MutableLiveData()
+    val channelItemList: LiveData<List<SaveChannel>>
+        get() = _channelItemList
 
     init {
         _categories.value = repository.getCateoryListPefs()
@@ -44,7 +48,9 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
                 saveItemList?.forEach {
                     Log.d(TAG, "getAllMostPopular: $it")
                 }
-                if (saveItemList != null) _saveList.value = saveItemList!!
+                saveItemList?.let { saveItems ->
+                    _popularItemList.value = saveItems
+                }
             }
         } else {
             Log.d(TAG, "getAllMostPopular.isNotSuccessful")
