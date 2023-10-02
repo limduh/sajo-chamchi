@@ -32,6 +32,8 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
     val categoryItemList: LiveData<List<SaveItem>>
         get() = _categoryItemList
 
+    private val channelSet: MutableSet<String> = mutableSetOf()
+
     private val _channelItemList: MutableLiveData<List<SaveChannel>> = MutableLiveData()
     val channelItemList: LiveData<List<SaveChannel>>
         get() = _channelItemList
@@ -45,11 +47,11 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
         if (response.isSuccessful) {
             response.body()?.let { body ->
                 val saveItemList = body.items?.map { it.toSaveItem() }
-                saveItemList?.forEach {
-                    Log.d(TAG, "getAllMostPopular: $it")
-                }
                 saveItemList?.let { saveItems ->
                     _popularItemList.value = saveItems
+                }
+                saveItemList?.forEach {
+                    Log.d(TAG, "getAllMostPopular: $it")
                 }
             }
         } else {
@@ -65,7 +67,13 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
                 val saveItemList = body.items?.map { it.toSaveItem() }
                 saveItemList?.forEach {
                     Log.d(TAG, "getAllMostPopularWithCategoryId: $it")
-                    if (it.channelId != null) getChannelWithId(id = it.channelId)
+                    if (it.channelId != null && it.channelId !in channelSet) {
+                        channelSet.add(it.channelId)
+                        getChannelWithId(it.channelId)
+                    }
+                }
+                saveItemList?.let { saveItems ->
+                    _categoryItemList.value = saveItems
                 }
             }
         } else {
@@ -96,6 +104,9 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
                 val saveItemList = body.items?.map { it.toSaveChannel() }
                 saveItemList?.forEach {
                     Log.d(TAG, "getChannelWithId: $it")
+                    val currentList =  channelItemList.value.orEmpty().toMutableList()
+                    currentList.add(it)
+                    _channelItemList.value = currentList
                 }
             }
         } else {

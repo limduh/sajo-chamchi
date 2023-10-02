@@ -52,7 +52,7 @@
                 android:background="@color/deep_dark_brown" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/category_recycler_view"
+                android:id="@+id/category_video_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

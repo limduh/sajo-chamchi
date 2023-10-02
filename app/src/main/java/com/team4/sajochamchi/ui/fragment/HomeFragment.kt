@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.FragmentHomeBinding
 import com.team4.sajochamchi.ui.activity.WebViewActivity
+import com.team4.sajochamchi.ui.adapter.ChannelAdapter
 import com.team4.sajochamchi.ui.adapter.HorizontalVideoAdapter
 import com.team4.sajochamchi.ui.dialog.CategoriesDialog
 import com.team4.sajochamchi.ui.dialog.ViewDetailDialog
@@ -31,10 +32,10 @@ class HomeFragment : Fragment() {
     }
     private val mainSharedViewModel: MainSharedViewModel by activityViewModels()
 
-    private val horizontalVideoAdapter : HorizontalVideoAdapter by lazy {
+    private val horizontalPopularVideoAdapter : HorizontalVideoAdapter by lazy {
         HorizontalVideoAdapter{ video ->
             Log.d(TAG, " $video")
-           /* val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener {
+            /*val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener {
                 override fun shareButtonClicked() {
 
                 }
@@ -48,6 +49,32 @@ class HomeFragment : Fragment() {
                 }
             })
             dialog.show(this@HomeFragment.childFragmentManager, "Detail Dialog")*/
+        }
+    }
+
+    private val horizontalCategoryVideoAdapter : HorizontalVideoAdapter by lazy {
+        HorizontalVideoAdapter{ video ->
+            Log.d(TAG, " $video")
+            /*val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener {
+                override fun shareButtonClicked() {
+
+                }
+
+                override fun favoriteButtonClicked() {
+
+                }
+
+                override fun thumbnailImageClicked() {
+
+                }
+            })
+            dialog.show(this@HomeFragment.childFragmentManager, "Detail Dialog")*/
+        }
+    }
+
+    private val channelAdapter : ChannelAdapter by lazy {
+        ChannelAdapter{ channel ->
+            Log.d(TAG, " $channel")
         }
     }
 
@@ -68,7 +95,17 @@ class HomeFragment : Fragment() {
     private fun initViews() = with(binding) {
         recentlyRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-            adapter = horizontalVideoAdapter
+            adapter = horizontalPopularVideoAdapter
+        }
+
+        categoryVideoRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+            adapter = horizontalCategoryVideoAdapter
+        }
+
+        channelsRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+            adapter = channelAdapter
         }
 
         detailDialogButton.setOnClickListener {
@@ -110,7 +147,14 @@ class HomeFragment : Fragment() {
         with(homeViewModel) {
             getAllMostPopular()
             popularItemList.observe(viewLifecycleOwner) { list ->
-                horizontalVideoAdapter.submitList(list)
+                horizontalPopularVideoAdapter.submitList(list)
+            }
+            getAllMostPopularWithCategoryId("1")
+            categoryItemList.observe(viewLifecycleOwner){ list ->
+                horizontalCategoryVideoAdapter.submitList(list)
+            }
+            channelItemList.observe(viewLifecycleOwner){list ->
+                channelAdapter.submitList(list)
             }
         }
 
