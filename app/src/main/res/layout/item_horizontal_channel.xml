@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item_layout"
     android:layout_width="wrap_content"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     android:padding="5dp">
 
     <androidx.cardview.widget.CardView
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:ellipsize="end"
-        android:fontFamily="@font/tauri_regular"
+        android:textStyle="bold"
         android:maxLines="2"
         android:text="sample video name"
         android:textColor="@color/deep_dark_brown"
