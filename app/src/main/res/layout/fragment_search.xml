@@ -52,7 +52,7 @@
                 android:id="@+id/search_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
-                android:background="@drawable/shape_search_blackstroke"
+                android:background="@drawable/background_search_board"
                 android:drawableEnd="@drawable/item_search"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
