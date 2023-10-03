@@ -43,9 +43,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recently_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingHorizontal="15dp" />
+                android:layout_height="wrap_content"/>
 
             <View
                 android:layout_width="match_parent"
@@ -54,11 +52,9 @@
                 android:background="@color/deep_dark_brown" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/category_recycler_view"
+                android:id="@+id/category_video_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingHorizontal="15dp" />
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,9 +69,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/channels_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingHorizontal="15dp" />
+                android:layout_height="wrap_content"/>
 
 
             <Button
