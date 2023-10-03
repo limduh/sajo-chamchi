@@ -41,6 +41,20 @@ class SearchFragment : Fragment() {
     }
 
     private fun initViews() = with(binding) {
+        // 최신 검색어 visibility 관련
+        var selected = true
+        searchHistoryStatusImageView.isSelected = selected
+        searchHistoryStatusImageView.setOnClickListener {
+            if (selected){
+                recentlySearchRecyclerView.visibility = View.GONE
+            }else{
+                recentlySearchRecyclerView.visibility = View.VISIBLE
+            }
+            selected = !selected
+            searchHistoryStatusImageView.isSelected = selected
+        }
+
+
         detailDialogButton.setOnClickListener {
             val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener {
                 override fun shareButtonClicked() {
