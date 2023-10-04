@@ -43,6 +43,7 @@ class SearchViewModel(private val repository: TotalRepository) : ViewModel() {
         }else{
             Log.d(TAG, "searchVideos.isNotSuccessful")
             Log.d(TAG, response.message())
+            _searchResult.value = emptyList()
         }
     }
 

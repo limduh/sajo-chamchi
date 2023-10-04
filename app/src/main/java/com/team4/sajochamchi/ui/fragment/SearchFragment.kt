@@ -190,6 +190,13 @@ class SearchFragment : Fragment() {
     private fun initViewModels() {
         with(searchViewModel) {
             searchResult.observe(viewLifecycleOwner) { list ->
+                if (list.isEmpty()){
+                    binding.noSearch.visibility = View.VISIBLE
+                    binding.resultRecyclerview.visibility = View.GONE
+                }else{
+                    binding.noSearch.visibility = View.GONE
+                    binding.resultRecyclerview.visibility = View.VISIBLE
+                }
                 searchResultAdapter.submitList(list)
             }
             searchHistory.observe(viewLifecycleOwner) { list ->
