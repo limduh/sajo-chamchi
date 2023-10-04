@@ -13,6 +13,9 @@ class MySharedPreferences(context: Context) {
     companion object {
         private const val CATEGORY_KEY = "CATEGRORY_KEY"
         private const val SEARCH_HISTORY_KEY = "SEARCH_HISTORY_KEY"
+
+        private const val SAVE_NAME = "SAVE_NAME"
+        private const val SAVE_DESCRIPTION = "SAVE_DESCRIPTION"
     }
 
     private val mySharedPreferences: SharedPreferences =
@@ -28,7 +31,7 @@ class MySharedPreferences(context: Context) {
         } else listOf()
     }
 
-    fun saveCateoryListPrefs(list: List<SaveCategory>){
+    fun saveCateoryListPrefs(list: List<SaveCategory>) {
         val arrayList = arrayListOf<SaveCategory>().apply {
             addAll(list)
         }
@@ -37,7 +40,7 @@ class MySharedPreferences(context: Context) {
             arrayList,
             object : TypeToken<ArrayList<SaveCategory>>() {}.type
         )
-        mEditPrefs.putString(CATEGORY_KEY,stringPrefs).apply()
+        mEditPrefs.putString(CATEGORY_KEY, stringPrefs).apply()
     }
 
     fun getSearchHistoryListPefs(): List<String> {
@@ -50,7 +53,7 @@ class MySharedPreferences(context: Context) {
         } else listOf()
     }
 
-    fun saveSearchHistoryListPrefs(list: List<String>){
+    fun saveSearchHistoryListPrefs(list: List<String>) {
         val arrayList = arrayListOf<String>().apply {
             addAll(list)
         }
@@ -59,6 +62,24 @@ class MySharedPreferences(context: Context) {
             arrayList,
             object : TypeToken<ArrayList<String>>() {}.type
         )
-        mEditPrefs.putString(SEARCH_HISTORY_KEY,stringPrefs).apply()
+        mEditPrefs.putString(SEARCH_HISTORY_KEY, stringPrefs).apply()
+    }
+
+    fun getNamePrefs(): String {
+        val stringPrefs = mySharedPreferences.getString(SAVE_NAME, null)
+        return stringPrefs.orEmpty()
+    }
+
+    fun getDiscriptionPrefs(): String {
+        val stringPrefs = mySharedPreferences.getString(SAVE_DESCRIPTION, null)
+        return stringPrefs.orEmpty()
+    }
+
+    fun saveNamePrefs(str: String) {
+        mySharedPreferences.edit().putString(SAVE_NAME, str).apply()
+    }
+
+    fun saveDescriptionPrfs(str: String) {
+        mySharedPreferences.edit().putString(SAVE_DESCRIPTION, str).apply()
     }
 }

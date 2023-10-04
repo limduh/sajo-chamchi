@@ -29,7 +29,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/edit_image_view"
         android:layout_width="27dp"
         android:layout_height="27dp"
         android:layout_marginEnd="20dp"
@@ -78,7 +78,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_mychannel"
+                    android:id="@+id/name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
@@ -91,7 +91,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
                 <TextView
-                    android:id="@+id/description"
+                    android:id="@+id/description_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
@@ -101,7 +101,7 @@
                     android:textSize="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_mychannel" />
+                    app:layout_constraintTop_toBottomOf="@+id/name_text_view" />
 
                 <View
                     android:id="@+id/view"
@@ -112,7 +112,7 @@
                     android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/description" />
+                    app:layout_constraintTop_toBottomOf="@id/description_text_view" />
 
                 <TextView
                     android:id="@+id/tv_myfavorite"

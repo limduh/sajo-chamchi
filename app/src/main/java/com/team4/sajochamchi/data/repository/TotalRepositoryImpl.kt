@@ -80,4 +80,18 @@ class TotalRepositoryImpl(context: Context) : TotalRepository {
     override fun saveSearchHistoryListPrefs(list: List<String>) {
         mySharedPreferences.saveSearchHistoryListPrefs(list)
     }
+
+
+    override fun getNamePrefs(): String{
+        return mySharedPreferences.getNamePrefs()
+    }
+    override fun getDiscriptionPrefs(): String{
+        return  mySharedPreferences.getDiscriptionPrefs()
+    }
+    override fun saveNamePrefs(str: String){
+        mySharedPreferences.saveNamePrefs(str)
+    }
+    override fun saveDescriptionPrfs(str: String){
+        mySharedPreferences.saveDescriptionPrfs(str)
+    }
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.FragmentMyPageBinding
 import com.team4.sajochamchi.ui.adapter.SaveVideoAdapter
+import com.team4.sajochamchi.ui.dialog.EditDialog
 import com.team4.sajochamchi.ui.dialog.ViewDetailDialog
 import com.team4.sajochamchi.ui.viewmodel.MainSharedViewModel
 import com.team4.sajochamchi.ui.viewmodel.MyPageViewModelFactory
@@ -54,6 +55,29 @@ class MyPageFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
         }
 
+
+        editImageView.setOnClickListener {
+            val dialog = EditDialog.newInstance(
+                nameTextView.text.toString(),
+                descriptionTextView.text.toString(),
+                object : EditDialog.ClickEventListener{
+                    override fun nameChanged(string: String) {
+                        mypageViewModel.saveNamePrefs(string)
+                    }
+
+                    override fun descriptionChanged(string: String) {
+                        mypageViewModel.saveDescriptionPrefs(string)
+                    }
+
+                    override fun favoriteClearClicked() {
+                        mypageViewModel.deleteAllFavorite()
+                    }
+
+                }
+            )
+            dialog.show(this@MyPageFragment.childFragmentManager, "Detail Dialog")
+        }
+
         detailDialogButton.setOnClickListener {
             val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener {
                 override fun shareButtonClicked() {
@@ -77,6 +101,14 @@ class MyPageFragment : Fragment() {
             saveItems.observe(viewLifecycleOwner){ list->
                 //Log.d(TAG, "initViewModels: ${list.size}")
                 saveVideoAdapter.submitList(list)
+            }
+
+            saveName.observe(viewLifecycleOwner){
+                binding.nameTextView.text = it
+            }
+
+            saveDescription.observe(viewLifecycleOwner){
+                binding.descriptionTextView.text = it
             }
         }
 
