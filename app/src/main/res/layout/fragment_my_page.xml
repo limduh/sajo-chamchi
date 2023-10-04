@@ -16,7 +16,6 @@
         android:text="DETAIL \n DIALOG"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/logo_image_view"
         android:layout_width="154dp"
@@ -29,105 +28,103 @@
 
 
     <ImageView
-        android:id="@+id/iv_pencil"
-        android:layout_width="27dp"
-        android:layout_height="27dp"
-        android:src="@drawable/img_mypage_pencil"
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="23dp"
+        android:src="@drawable/img_pencil"
+        app:layout_constraintBottom_toBottomOf="@+id/logo_image_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="36dp"
-        android:layout_marginRight="23dp"/>
+        app:layout_constraintTop_toTopOf="@+id/logo_image_view" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/logo_image_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="10dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="360dp"
-                android:layout_height="147dp"
-                android:src="@drawable/img_mypage_wave"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/iv_tuna"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/img_tuna"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="92dp"/>
-
-            <TextView
-                android:id="@+id/tv_mychannel"
-                android:layout_width="167dp"
-                android:layout_height="39dp"
-                android:layout_marginTop="11dp"
-                android:gravity="center"
-                android:text="My Channel"
-                android:fontFamily="@font/lobster_regular"
-                android:textSize="32sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="314dp"
-                android:layout_height="66dp"
-                android:layout_marginTop="15dp"
-                android:textSize="12sp"
-                android:fontFamily="@font/tauri_regular"
-                android:text="제가 좋아하는 스시관련 영상, 음악관련 영상, 운동관련 영상, 뉴스, 애니메이션, 게임플레이를 편집 해놓은 체널 입니다."
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_mychannel" />
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="314dp"
-                android:layout_height="1dp"
-                android:background="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
-                android:layout_marginTop="13dp"/>
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="98dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="9dp"
-                android:fontFamily="@font/lobster_regular"
-                android:text="My Favorite"
-                android:textSize="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="314dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="17dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_image_view"
+        app:layout_constraintVertical_bias="0.0">
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="147dp"
+            android:src="@drawable/img_sea"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/img_tuna"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="92dp"/>
+
+        <TextView
+            android:id="@+id/tv_mychannel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:text="My Channel"
+            android:fontFamily="@font/lobster_regular"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/tauri_regular"
+            android:text="제가 좋아하는 스시관련 영상, 음악관련 영상, 운동관련 영상, 뉴스, 애니메이션, 게임플레이를 편집 해놓은 체널 입니다."
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mychannel" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description" />
+
+        <TextView
+            android:id="@+id/tv_myfavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:fontFamily="@font/lobster_regular"
+            android:text="My Favorite"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_myfavorite"
+            android:layout_marginTop="17dp"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
