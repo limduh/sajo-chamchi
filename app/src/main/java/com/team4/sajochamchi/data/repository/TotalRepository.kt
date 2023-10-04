@@ -32,4 +32,10 @@ interface TotalRepository {
     fun saveCateoryListPrefs(list: List<SaveCategory>)
     fun getSearchHistoryListPefs(): List<String>
     fun saveSearchHistoryListPrefs(list: List<String>)
+
+
+    fun getNamePrefs(): String
+    fun getDiscriptionPrefs(): String
+    fun saveNamePrefs(str: String)
+    fun saveDescriptionPrfs(str: String)
 }

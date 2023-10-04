@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/beige"
     tools:context=".ui.fragment.MyPageFragment">
 
@@ -16,19 +16,20 @@
         android:text="DETAIL \n DIALOG"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/logo_image_view"
         android:layout_width="154dp"
         android:layout_height="66dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/img_mypage_logo"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/edit_image_view"
         android:layout_width="27dp"
         android:layout_height="27dp"
         android:layout_marginEnd="20dp"
@@ -39,21 +40,23 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo_image_view"
-        android:layout_marginTop="10dp"
-        android:layout_height="0dp">
+        app:layout_constraintTop_toBottomOf="@+id/logo_image_view">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="0dp"
@@ -75,7 +78,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tv_mychannel"
+                    android:id="@+id/name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
@@ -88,28 +91,28 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
                 <TextView
-                    android:id="@+id/description"
+                    android:id="@+id/description_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
                     android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="15dp"
                     android:text="제가 좋아하는 스시관련 영상, 음악관련 영상, 운동관련 영상, 뉴스, 애니메이션, 게임플레이를 편집 해놓은 체널 입니다."
                     android:textColor="@color/deep_dark_brown"
                     android:textSize="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_mychannel" />
+                    app:layout_constraintTop_toBottomOf="@+id/name_text_view" />
 
                 <View
                     android:id="@+id/view"
                     android:layout_width="match_parent"
-                    android:layout_marginHorizontal="20dp"
                     android:layout_height="2dp"
+                    android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="5dp"
                     android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/description" />
+                    app:layout_constraintTop_toBottomOf="@id/description_text_view" />
 
                 <TextView
                     android:id="@+id/tv_myfavorite"
@@ -125,11 +128,15 @@
                     app:layout_constraintTop_toBottomOf="@+id/view" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/save_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_marginHorizontal="20dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="17dp" />
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="17dp"
+                android:clipToPadding="false"
+                android:paddingBottom="80dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
