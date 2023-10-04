@@ -11,7 +11,7 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:padding="10dp"
-        android:src="@drawable/img_down_arrow"/>
+        android:src="@drawable/img_drag_drop"/>
     <TextView
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/drag_drop"
