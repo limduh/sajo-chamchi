@@ -58,7 +58,9 @@ class SearchFragment : Fragment() {
 
     private val searchHistoryAdapter: SearchHistoryAdapter by lazy {
         SearchHistoryAdapter { str ->
-
+            binding.searchEditText.setText(str)
+            searchViewModel.searchVideos(str)
+            searchViewModel.addSearchHistory(str)
         }
     }
 
