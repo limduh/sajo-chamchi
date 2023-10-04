@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
     android:layout_marginVertical="10dp"
-    android:background="@drawable/background_homepage_category_button">
+    android:background="@drawable/background_home_category_button">
 
     <TextView
         android:id="@+id/item_button"
