@@ -15,7 +15,7 @@ import com.team4.sajochamchi.data.sharedpreferences.MySharedPreferences
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
-class TotalRepositoryImpl(context: Context) : TotalRepository {
+class TotalRepositoryImpl(context: Context,videoId : String = "") : TotalRepository {
     private val mySharedPreferences: MySharedPreferences = MySharedPreferences(context)
     private val database = ItemDatabase.getDatabase(context)
     private val dao = database.getItemDao()
@@ -50,6 +50,7 @@ class TotalRepositoryImpl(context: Context) : TotalRepository {
 
     //Room
     override val allSaveItems: Flow<List<SaveItem>> = dao.getAll()
+    override val isSaveItems: Flow<List<SaveItem>> = dao.getAllWithVideoId(videoId)
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

@@ -80,7 +80,7 @@
                     <ImageView
                         android:id="@+id/img_thumbnail"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:src="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -116,21 +116,24 @@
 
                 <TextView
                     android:id="@+id/title_text_view"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lobster_regular"
                     android:text="Video Title"
                     android:textSize="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:textColor="@color/deep_dark_brown"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/desc_text_view"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/tauri_regular"
+                    android:paddingBottom="50dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:text="description"
                     android:textSize="12sp"
                     android:textColor="@color/deep_dark_brown"

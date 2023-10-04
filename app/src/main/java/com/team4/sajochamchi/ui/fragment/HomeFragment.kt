@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.team4.sajochamchi.data.model.SaveItem
 import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.FragmentHomeBinding
 import com.team4.sajochamchi.ui.activity.WebViewActivity
@@ -32,49 +33,34 @@ class HomeFragment : Fragment() {
     }
     private val mainSharedViewModel: MainSharedViewModel by activityViewModels()
 
-    private val horizontalPopularVideoAdapter : HorizontalVideoAdapter by lazy {
-        HorizontalVideoAdapter{ video ->
+    private val horizontalPopularVideoAdapter: HorizontalVideoAdapter by lazy {
+        HorizontalVideoAdapter { video ->
             Log.d(TAG, " $video")
-            /*val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener {
-                override fun shareButtonClicked() {
-
-                }
-
-                override fun favoriteButtonClicked() {
-
-                }
-
-                override fun thumbnailImageClicked() {
-
-                }
-            })
-            dialog.show(this@HomeFragment.childFragmentManager, "Detail Dialog")*/
+            val dialog =
+                ViewDetailDialog.newInstance(video)
+            dialog.show(this@HomeFragment.childFragmentManager, "Detail Dialog")
         }
     }
 
-    private val horizontalCategoryVideoAdapter : HorizontalVideoAdapter by lazy {
-        HorizontalVideoAdapter{ video ->
+    private val horizontalCategoryVideoAdapter: HorizontalVideoAdapter by lazy {
+        HorizontalVideoAdapter { video ->
             Log.d(TAG, " $video")
-            /*val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener {
-                override fun shareButtonClicked() {
-
-                }
-
-                override fun favoriteButtonClicked() {
-
-                }
-
-                override fun thumbnailImageClicked() {
-
-                }
-            })
-            dialog.show(this@HomeFragment.childFragmentManager, "Detail Dialog")*/
+            val dialog =
+                ViewDetailDialog.newInstance(video)
+            dialog.show(this@HomeFragment.childFragmentManager, "Detail Dialog")
         }
     }
 
-    private val channelAdapter : ChannelAdapter by lazy {
-        ChannelAdapter{ channel ->
+    private val channelAdapter: ChannelAdapter by lazy {
+        ChannelAdapter { channel ->
             Log.d(TAG, " $channel")
+            startActivity(
+                WebViewActivity.newIntent(
+                    requireContext(),
+                    channel.title.orEmpty(),
+                    "https://www.youtube.com/channel/${channel.id.orEmpty()}"
+                )
+            )
         }
     }
 
@@ -94,45 +80,21 @@ class HomeFragment : Fragment() {
 
     private fun initViews() = with(binding) {
         recentlyRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = horizontalPopularVideoAdapter
         }
 
         categoryVideoRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = horizontalCategoryVideoAdapter
         }
 
         channelsRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = channelAdapter
-        }
-
-        detailDialogButton.setOnClickListener {
-            val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener {
-                override fun shareButtonClicked() {
-
-                }
-
-                override fun favoriteButtonClicked() {
-
-                }
-
-                override fun thumbnailImageClicked() {
-
-                }
-            })
-            dialog.show(this@HomeFragment.childFragmentManager, "Detail Dialog")
-        }
-
-        webViewActivityButton.setOnClickListener {
-            startActivity(
-                WebViewActivity.newIntent(
-                    requireContext(),
-                    "test",
-                    "https://www.youtube.com/"
-                )
-            )
         }
 
         categoriesDialogButton.setOnClickListener {
@@ -150,10 +112,10 @@ class HomeFragment : Fragment() {
                 horizontalPopularVideoAdapter.submitList(list)
             }
             getAllMostPopularWithCategoryId("1")
-            categoryItemList.observe(viewLifecycleOwner){ list ->
+            categoryItemList.observe(viewLifecycleOwner) { list ->
                 horizontalCategoryVideoAdapter.submitList(list)
             }
-            channelItemList.observe(viewLifecycleOwner){list ->
+            channelItemList.observe(viewLifecycleOwner) { list ->
                 channelAdapter.submitList(list)
             }
         }

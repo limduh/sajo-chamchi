@@ -17,8 +17,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.team4.sajochamchi.R
+import com.team4.sajochamchi.data.model.SaveItem
 import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.FragmentSearchBinding
+import com.team4.sajochamchi.ui.activity.WebViewActivity
 import com.team4.sajochamchi.ui.adapter.SearchHistoryAdapter
 import com.team4.sajochamchi.ui.adapter.SearchResultAdapter
 import com.team4.sajochamchi.ui.dialog.ViewDetailDialog
@@ -40,20 +42,9 @@ class SearchFragment : Fragment() {
 
     private val searchResultAdapter: SearchResultAdapter by lazy {
         SearchResultAdapter { video ->
-            /*val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener {
-                override fun shareButtonClicked() {
-
-                }
-
-                override fun favoriteButtonClicked() {
-
-                }
-
-                override fun thumbnailImageClicked() {
-
-                }
-            })
-            dialog.show(this@SearchFragment.childFragmentManager, "Detail Dialog")*/
+            val dialog =
+                ViewDetailDialog.newInstance(video)
+            dialog.show(this@SearchFragment.childFragmentManager, "Detail Dialog")
         }
     }
 
@@ -181,23 +172,6 @@ class SearchFragment : Fragment() {
                 }
             })
 
-        }
-
-        detailDialogButton.setOnClickListener {
-            val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener {
-                override fun shareButtonClicked() {
-
-                }
-
-                override fun favoriteButtonClicked() {
-
-                }
-
-                override fun thumbnailImageClicked() {
-
-                }
-            })
-            dialog.show(this@SearchFragment.childFragmentManager, "Detail Dialog")
         }
     }
 
