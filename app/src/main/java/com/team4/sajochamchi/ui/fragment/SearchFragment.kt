@@ -57,11 +57,15 @@ class SearchFragment : Fragment() {
     }
 
     private val searchHistoryAdapter: SearchHistoryAdapter by lazy {
-        SearchHistoryAdapter { str ->
-            binding.searchEditText.setText(str)
-            searchViewModel.searchVideos(str)
-            searchViewModel.addSearchHistory(str)
-        }
+        SearchHistoryAdapter(
+            onClickEventListener = { str ->
+                binding.searchEditText.setText(str)
+                searchViewModel.searchVideos(str)
+                searchViewModel.addSearchHistory(str)
+            },
+            onDeleteImageClickEventListener = { pos ->
+                searchViewModel.deleteSearchHistory(pos)
+            })
     }
 
     override fun onCreateView(
@@ -84,9 +88,9 @@ class SearchFragment : Fragment() {
         searchHistoryStatusImageView.isSelected = selected
         searchHistoryStatusImageView.setOnClickListener {
             if (selected) {
-                recentlySearchRecyclerView.visibility = View.GONE
+                totalRecentryView.visibility = View.GONE
             } else {
-                recentlySearchRecyclerView.visibility = View.VISIBLE
+                totalRecentryView.visibility = View.VISIBLE
             }
             selected = !selected
             searchHistoryStatusImageView.isSelected = selected
@@ -189,8 +193,14 @@ class SearchFragment : Fragment() {
                 searchResultAdapter.submitList(list)
             }
             searchHistory.observe(viewLifecycleOwner) { list ->
-                searchHistoryAdapter.submitList(list)
-                binding.recentlySearchRecyclerView.scrollToPosition(0)
+                if (list.isEmpty()){
+                    searchHistoryAdapter.submitList(list)
+                    binding.historyEmptyView.visibility = View.VISIBLE
+                }else{
+                    binding.historyEmptyView.visibility = View.GONE
+                    searchHistoryAdapter.submitList(list)
+                    binding.recentlySearchRecyclerView.scrollToPosition(0)
+                }
             }
         }
 

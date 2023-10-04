@@ -8,17 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.team4.sajochamchi.databinding.ItemHorizontalStringBinding
 
 
-class SearchHistoryAdapter(private val onClickEventListener: (String) -> (Unit)) :
-    ListAdapter<String, SearchHistoryAdapter.ViewHolder>(object :
-        DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem === newItem
-        }
+class SearchHistoryAdapter(
+    private val onClickEventListener: (String) -> (Unit),
+    private val onDeleteImageClickEventListener: (Int) -> (Unit),
+) : ListAdapter<String, SearchHistoryAdapter.ViewHolder>(object :
+    DiffUtil.ItemCallback<String>() {
+    override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+        return oldItem === newItem
+    }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
-        }
-    }) {
+    override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        return oldItem == newItem
+    }
+}) {
 
     inner class ViewHolder(private val binding: ItemHorizontalStringBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -29,7 +31,7 @@ class SearchHistoryAdapter(private val onClickEventListener: (String) -> (Unit))
                 onClickEventListener(item)
             }
             deleteImageView.setOnClickListener {
-                notifyItemRemoved(adapterPosition)
+                onDeleteImageClickEventListener(adapterPosition)
             }
             titleTextView.text = item
         }
