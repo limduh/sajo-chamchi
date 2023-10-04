@@ -46,6 +46,26 @@ class SearchViewModel(private val repository: TotalRepository) : ViewModel() {
         }
     }
 
+    fun addSearchHistory(string: String) {
+        val history = searchHistory.value.orEmpty().toMutableList()
+        val idx = history.indexOfFirst { it == string }
+        val arrayList = ArrayList<String>()
+        if (idx >= 0) { // 히스토리에 있음
+            history.removeAt(idx)
+        }
+        arrayList.add(string)
+        arrayList.addAll(history)
+        repository.saveSearchHistoryListPrefs(arrayList)
+        _searchHistory.value = arrayList
+    }
+
+    fun deleteSearchHistory(position : Int){
+        val history = searchHistory.value.orEmpty().toMutableList()
+        history.removeAt(position)
+        repository.saveSearchHistoryListPrefs(history)
+        _searchHistory.value = history
+    }
+
 }
 
 class SearchViewModelFactory(private val totalRepository: TotalRepository) : ViewModelProvider.Factory {

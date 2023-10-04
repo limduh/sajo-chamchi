@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.team4.sajochamchi.R
 import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.FragmentSearchBinding
+import com.team4.sajochamchi.ui.adapter.SearchHistoryAdapter
 import com.team4.sajochamchi.ui.adapter.SearchResultAdapter
 import com.team4.sajochamchi.ui.dialog.ViewDetailDialog
 import com.team4.sajochamchi.ui.viewmodel.MainSharedViewModel
@@ -52,6 +53,12 @@ class SearchFragment : Fragment() {
                 }
             })
             dialog.show(this@SearchFragment.childFragmentManager, "Detail Dialog")*/
+        }
+    }
+
+    private val searchHistoryAdapter: SearchHistoryAdapter by lazy {
+        SearchHistoryAdapter { str ->
+
         }
     }
 
@@ -137,10 +144,17 @@ class SearchFragment : Fragment() {
                     imm.hideSoftInputFromWindow(windowToken, 0)
                     //todo search process
                     searchViewModel.searchVideos(text.toString())
+                    searchViewModel.addSearchHistory(text.toString())
                     return@setOnKeyListener true
                 }
                 return@setOnKeyListener false
             }
+        }
+
+        recentlySearchRecyclerView.apply {
+            adapter = searchHistoryAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
         resultRecyclerview.apply {
@@ -171,6 +185,10 @@ class SearchFragment : Fragment() {
         with(searchViewModel) {
             searchResult.observe(viewLifecycleOwner) { list ->
                 searchResultAdapter.submitList(list)
+            }
+            searchHistory.observe(viewLifecycleOwner) { list ->
+                searchHistoryAdapter.submitList(list)
+                binding.recentlySearchRecyclerView.scrollToPosition(0)
             }
         }
 
