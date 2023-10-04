@@ -26,11 +26,23 @@ class SearchViewModel(private val repository: TotalRepository) : ViewModel() {
     val searchResult : LiveData<List<SaveItem>>
         get() = _searchResult
 
+   
+    private val _beforeSearch : MutableLiveData<String> = MutableLiveData()
+    val beforeSearch : LiveData<String>
+        get() = _beforeSearch
+
+    private val _state : MutableLiveData<SearchState> = MutableLiveData()
+    val state : LiveData<SearchState>
+        get() = _state
+
+    private var page : Int = 0
+    
     init {
         _searchHistory.value = repository.getSearchHistoryListPefs()
     }
-
+    
     fun searchVideos(q:String) = viewModelScope.launch {
+        _state.value = SearchState.Loading(q)
         val response = repository.searchVideos(q = q)
         if (response.isSuccessful){
             response.body()?.let { body ->
@@ -38,11 +50,59 @@ class SearchViewModel(private val repository: TotalRepository) : ViewModel() {
                 saveItemList?.forEach {
                     Log.d(TAG, "searchVideos: $it")
                 }
+                _state.value = SearchState.Finish(q,body.nextPageToken?:"")
                 saveItemList?.let { _searchResult.value = it }
             }
         }else{
             Log.d(TAG, "searchVideos.isNotSuccessful")
             Log.d(TAG, response.message())
+            _searchResult.value = emptyList()
+        }
+    }
+
+    fun pagingSearchVideos(totalItemCount:Int) = viewModelScope.launch {
+        when (val searchState = state.value) {
+            is SearchState.Loading -> {
+                return@launch
+            }
+
+            is SearchState.Finish -> {
+                _state.value = SearchState.Loading(q = searchState.q)
+                if (page * 20 < totalItemCount) {
+                    page++
+                    Log.d(TAG, "pagingSearchVideos: $page")
+                    Log.d(TAG, "pagingSearchVideos: ${searchState.nextToken}")
+                    val response = repository.searchVideos(
+                        q = searchState.q,
+                        pageToken = searchState.nextToken
+                    )
+                    if (response.isSuccessful) {
+                        response.body()?.let { body ->
+                            val saveItemList = body.items?.map { it.toSaveItem() }
+                            saveItemList?.forEach {
+                                Log.d(TAG, "pagingSearchVideos: $it")
+                            }
+                            _state.value = SearchState.Finish(searchState.q, body.nextPageToken ?: "")
+                            saveItemList?.let {
+                                _searchResult.value =
+                                    searchResult.value.orEmpty().toMutableList().apply {
+                                        addAll(it)
+                                    }
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "pagingSearchVideos.isNotSuccessful")
+                        Log.d(TAG, response.message())
+                        page--
+                        _state.value = SearchState.Finish(
+                            searchState.q,
+                            searchState.nextToken
+                        )
+                    }
+                }
+            }
+
+            else -> {} //null
         }
     }
 
@@ -76,3 +136,8 @@ class SearchViewModelFactory(private val totalRepository: TotalRepository) : Vie
         throw IllegalArgumentException("Unknown ViewModel Class")
     }
 }
+
+sealed interface SearchState{
+    data class Loading(val q:String):SearchState
+    data class Finish(val q:String,val nextToken : String):SearchState
+} 
