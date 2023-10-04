@@ -13,6 +13,7 @@
         android:padding="10dp"
         android:src="@drawable/img_drag_drop"/>
     <TextView
+        android:id="@+id/tv_seleceted_video_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/drag_drop"
         android:layout_width="wrap_content"

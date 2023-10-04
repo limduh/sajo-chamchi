@@ -71,7 +71,7 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_select_dialog"
+        android:id="@+id/rv_selected_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -85,7 +85,7 @@
         android:id="@+id/tv_unselect_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/rv_select_dialog"
+        app:layout_constraintTop_toBottomOf="@+id/rv_selected_dialog"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="25dp"
         android:layout_marginTop="35dp"
@@ -97,7 +97,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_select_dialog"
+        app:layout_constraintTop_toBottomOf="@id/rv_selected_dialog"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="25dp"
         android:src="@drawable/img_up_arrow"/>
@@ -113,7 +113,7 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_unselect_dialog"
+        android:id="@+id/rv_unselected_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
