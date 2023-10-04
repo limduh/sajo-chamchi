@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.team4.sajochamchi.data.model.SaveItem
 import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.FragmentHomeBinding
 import com.team4.sajochamchi.ui.activity.WebViewActivity
@@ -63,6 +62,7 @@ class HomeFragment : Fragment() {
             )
         }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

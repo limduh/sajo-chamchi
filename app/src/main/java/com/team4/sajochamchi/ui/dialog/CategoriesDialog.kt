@@ -1,15 +1,18 @@
 package com.team4.sajochamchi.ui.dialog
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.team4.sajochamchi.R
 import com.team4.sajochamchi.data.model.SaveCategory
 import com.team4.sajochamchi.databinding.DialogCategoriesBinding
 import com.team4.sajochamchi.databinding.DialogViewDetailBinding
@@ -31,6 +34,18 @@ class CategoriesDialog(private val eventListener: EventListener) :
     private var _binding: DialogCategoriesBinding? = null
     private val binding: DialogCategoriesBinding
         get() = _binding!!
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+        return super.onCreateDialog(savedInstanceState).apply {
+            setOnShowListener {
+                window?.findViewById<View>(com.google.android.material.R.id.touch_outside)
+                    ?.setOnClickListener(null)
+                (window?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                    ?.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,7 +94,6 @@ class CategoriesDialog(private val eventListener: EventListener) :
         binding.rvSelectedDialog.adapter = selectedadapter
         binding.rvSelectedDialog.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
 
-
         closeImageButton.setOnClickListener {
             dismiss()
         }
@@ -87,6 +101,7 @@ class CategoriesDialog(private val eventListener: EventListener) :
         //드래그 방지
         try {
             val behavior = (dialog as BottomSheetDialog).behavior
+
             behavior.addBottomSheetCallback(object : BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
                     if (newState == BottomSheetBehavior.STATE_DRAGGING) {
