@@ -1,5 +1,6 @@
 package com.team4.sajochamchi.ui.dialog
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -70,7 +71,16 @@ class ViewDetailDialog(private val clickEventListener: ClickEventListener) :
         }
 
         shareImageButton.setOnClickListener {
-            clickEventListener.shareButtonClicked()
+//            clickEventListener.shareButtonClicked()
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    "https://www.google.com" // 전달하려는 Data(Value)
+                )
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(shareIntent, null))
         }
         //드래그 방지
         try {
