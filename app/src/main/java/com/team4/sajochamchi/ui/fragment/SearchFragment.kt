@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.team4.sajochamchi.R
 import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.FragmentSearchBinding
@@ -167,6 +168,19 @@ class SearchFragment : Fragment() {
             adapter = searchResultAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val lastVisibleItemPosition =
+                        (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                    val itemTotalCount = searchResultAdapter.itemCount
+                    if (lastVisibleItemPosition >= itemTotalCount - 5) {
+                        searchViewModel.pagingSearchVideos(itemTotalCount)
+                    }
+                }
+            })
+
         }
 
         detailDialogButton.setOnClickListener {
@@ -189,21 +203,25 @@ class SearchFragment : Fragment() {
 
     private fun initViewModels() {
         with(searchViewModel) {
+            beforeSearch.observe(viewLifecycleOwner) { str ->
+                binding.searchEditText.setText(str)
+            }
+
             searchResult.observe(viewLifecycleOwner) { list ->
-                if (list.isEmpty()){
+                if (list.isEmpty()) {
                     binding.noSearch.visibility = View.VISIBLE
                     binding.resultRecyclerview.visibility = View.GONE
-                }else{
+                } else {
                     binding.noSearch.visibility = View.GONE
                     binding.resultRecyclerview.visibility = View.VISIBLE
                 }
                 searchResultAdapter.submitList(list)
             }
             searchHistory.observe(viewLifecycleOwner) { list ->
-                if (list.isEmpty()){
+                if (list.isEmpty()) {
                     searchHistoryAdapter.submitList(list)
                     binding.historyEmptyView.visibility = View.VISIBLE
-                }else{
+                } else {
                     binding.historyEmptyView.visibility = View.GONE
                     searchHistoryAdapter.submitList(list)
                     binding.recentlySearchRecyclerView.scrollToPosition(0)
