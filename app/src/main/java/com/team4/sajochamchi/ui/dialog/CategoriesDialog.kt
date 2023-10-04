@@ -1,21 +1,22 @@
 package com.team4.sajochamchi.ui.dialog
 
 import android.app.Dialog
-import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.team4.sajochamchi.R
 import com.team4.sajochamchi.data.model.SaveCategory
 import com.team4.sajochamchi.databinding.DialogCategoriesBinding
-import com.team4.sajochamchi.databinding.DialogViewDetailBinding
 import com.team4.sajochamchi.ui.adapter.SelectedCategoriesAdpter
 import com.team4.sajochamchi.ui.adapter.UnselectedCategoriesAdapter
 
@@ -29,6 +30,7 @@ class CategoriesDialog(private val eventListener: EventListener) :
     }
 
     interface EventListener {
+        fun onDismiss()
     }
 
     private var _binding: DialogCategoriesBinding? = null
@@ -39,9 +41,9 @@ class CategoriesDialog(private val eventListener: EventListener) :
 
         return super.onCreateDialog(savedInstanceState).apply {
             setOnShowListener {
-                window?.findViewById<View>(com.google.android.material.R.id.touch_outside)
+                window?.findViewById<View>(R.id.touch_outside)
                     ?.setOnClickListener(null)
-                (window?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                (window?.findViewById<View>(R.id.design_bottom_sheet)
                     ?.layoutParams as CoordinatorLayout.LayoutParams).behavior = null
             }
         }
@@ -87,12 +89,30 @@ class CategoriesDialog(private val eventListener: EventListener) :
         selecedItems.add(SaveCategory("dd","dd"))
         selecedItems.add(SaveCategory("dd","dd"))
 
-        val unselectedadapter = UnselectedCategoriesAdapter(unselectedItems)
-        val selectedadapter = SelectedCategoriesAdpter(selecedItems)
-        binding.rvUnselectedDialog.adapter = unselectedadapter
-        binding.rvUnselectedDialog.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-        binding.rvSelectedDialog.adapter = selectedadapter
-        binding.rvSelectedDialog.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+        val unselectedadapter = UnselectedCategoriesAdapter( object :UnselectedCategoriesAdapter.ItemClick{
+            override fun onClick(saveCategory: SaveCategory) {
+
+            }
+
+        })
+        val selectedadapter = SelectedCategoriesAdpter(object : SelectedCategoriesAdpter.ItemClick{
+            override fun onClick(saveCategory: SaveCategory) {
+
+            }
+        })
+        rvUnselectedDialog.apply {
+            adapter = unselectedadapter
+            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+            setHasFixedSize(true)
+            addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL))
+        }
+
+        rvSelectedDialog.apply {
+            adapter = unselectedadapter
+            layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+            setHasFixedSize(true)
+            addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL))
+        }
 
         closeImageButton.setOnClickListener {
             dismiss()
@@ -116,6 +136,11 @@ class CategoriesDialog(private val eventListener: EventListener) :
         } catch (e: IllegalAccessException) {
             e.printStackTrace()
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        eventListener.onDismiss()
+        super.onDismiss(dialog)
     }
 
     override fun onDestroy() {

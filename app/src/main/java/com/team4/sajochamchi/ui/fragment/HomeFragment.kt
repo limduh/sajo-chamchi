@@ -99,7 +99,9 @@ class HomeFragment : Fragment() {
 
         categoriesDialogButton.setOnClickListener {
             val dialog = CategoriesDialog.newInstance(object : CategoriesDialog.EventListener {
+                override fun onDismiss() {
 
+                }
             })
             dialog.show(this@HomeFragment.childFragmentManager, "Categories Dialog")
         }

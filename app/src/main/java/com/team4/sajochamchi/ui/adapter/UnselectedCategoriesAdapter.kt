@@ -3,40 +3,47 @@ package com.team4.sajochamchi.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.team4.sajochamchi.data.model.SaveCategory
+import com.team4.sajochamchi.databinding.ItemSelectedCategoriesBinding
 import com.team4.sajochamchi.databinding.ItemUnselectedCategoriesBinding
 
-class UnselectedCategoriesAdapter(private val mItems: ArrayList<SaveCategory>) : RecyclerView.Adapter<UnselectedCategoriesAdapter.Holder>() {
+class UnselectedCategoriesAdapter(private val itemClick: ItemClick) :
+    ListAdapter<SaveCategory, UnselectedCategoriesAdapter.ViewHolder>(
+        object : DiffUtil.ItemCallback<SaveCategory>() {
+            override fun areItemsTheSame(oldItem: SaveCategory, newItem: SaveCategory): Boolean {
+                return oldItem == newItem
+            }
 
-    interface ItemClick {
-        fun onClick(view: View, position: Int)
-    }
-
-    var itemClick: ItemClick? = null
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ItemUnselectedCategoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return Holder(binding)
-    }
-
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.itemView.setOnClickListener {
-            itemClick?.onClick(it, position)
+            override fun areContentsTheSame(oldItem: SaveCategory, newItem: SaveCategory): Boolean {
+                return oldItem.id == newItem.id
+            }
         }
-        holder.name.text = mItems[position].title
+    ) {
+    interface ItemClick {
+        fun onClick(saveCategory: SaveCategory)
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        return ViewHolder(ItemUnselectedCategoriesBinding.inflate(inflater, parent, false))
     }
 
-    override fun getItemCount(): Int {
-        return mItems.size
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind()
     }
 
-    inner class Holder(binding:ItemUnselectedCategoriesBinding) : RecyclerView.ViewHolder(binding.root) {
-        val name = binding.tvUnselectedVideoName
-        val id = 0
+    inner class ViewHolder(private val binding: ItemUnselectedCategoriesBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind() = with(binding) {
+            val pos = adapterPosition
+            val currentItem = currentList[pos]
+            tvUnselectedCategoryName.text = currentItem.title
+            addImageView.setOnClickListener {
+                itemClick.onClick(currentItem)
+            }
+        }
     }
 }
