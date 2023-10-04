@@ -1,15 +1,20 @@
 package com.team4.sajochamchi.ui.dialog
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.team4.sajochamchi.data.model.SaveCategory
 import com.team4.sajochamchi.databinding.DialogCategoriesBinding
 import com.team4.sajochamchi.databinding.DialogViewDetailBinding
+import com.team4.sajochamchi.ui.adapter.SelectedCategoriesAdpter
+import com.team4.sajochamchi.ui.adapter.UnselectedCategoriesAdapter
 
 
 class CategoriesDialog(private val eventListener: EventListener) :
@@ -57,6 +62,23 @@ class CategoriesDialog(private val eventListener: EventListener) :
     }
 
     private fun initViews() = with(binding) {
+
+        val unselectedItems = ArrayList<SaveCategory>()
+        val selecedItems = ArrayList<SaveCategory>()
+        unselectedItems.add(SaveCategory("dd","dd"))
+        unselectedItems.add(SaveCategory("dd","dd"))
+        unselectedItems.add(SaveCategory("dd","dd"))
+        selecedItems.add(SaveCategory("dd","dd"))
+        selecedItems.add(SaveCategory("dd","dd"))
+        selecedItems.add(SaveCategory("dd","dd"))
+
+        val unselectedadapter = UnselectedCategoriesAdapter(unselectedItems)
+        val selectedadapter = SelectedCategoriesAdpter(selecedItems)
+        binding.rvUnselectedDialog.adapter = unselectedadapter
+        binding.rvUnselectedDialog.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+        binding.rvSelectedDialog.adapter = selectedadapter
+        binding.rvSelectedDialog.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+
 
         closeImageButton.setOnClickListener {
             dismiss()
