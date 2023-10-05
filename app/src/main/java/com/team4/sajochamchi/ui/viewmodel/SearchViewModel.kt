@@ -43,6 +43,7 @@ class SearchViewModel(private val repository: TotalRepository) : ViewModel() {
     
     fun searchVideos(q:String) = viewModelScope.launch {
         _state.value = SearchState.Loading(q)
+        page = 0
         val response = repository.searchVideos(q = q)
         if (response.isSuccessful){
             response.body()?.let { body ->

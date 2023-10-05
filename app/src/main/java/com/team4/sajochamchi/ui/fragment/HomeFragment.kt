@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.team4.sajochamchi.R
 import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
@@ -85,12 +86,36 @@ class HomeFragment : Fragment() {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = horizontalPopularVideoAdapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val lastVisibleItemPosition =
+                        (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                    val itemTotalCount = horizontalPopularVideoAdapter.itemCount
+                    if (lastVisibleItemPosition >= itemTotalCount - 5) {
+                        homeViewModel.getPagingAllMostPopular()
+                    }
+                }
+            })
         }
 
         categoryVideoRecyclerView.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = horizontalCategoryVideoAdapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val lastVisibleItemPosition =
+                        (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                    val itemTotalCount = horizontalCategoryVideoAdapter.itemCount
+                    if (lastVisibleItemPosition >= itemTotalCount - 5) {
+                        homeViewModel.getPagingAllMostPopularWithCategoryId()
+                    }
+                }
+            })
         }
 
         channelsRecyclerView.apply {

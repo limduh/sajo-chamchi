@@ -12,9 +12,11 @@ import com.team4.sajochamchi.data.model.SaveChannel
 import com.team4.sajochamchi.data.model.SaveItem
 import com.team4.sajochamchi.data.model.category.toSaveCategory
 import com.team4.sajochamchi.data.model.channel.toSaveChannel
+import com.team4.sajochamchi.data.model.searchvideo.toSaveItem
 import com.team4.sajochamchi.data.model.video.toSaveItem
 import com.team4.sajochamchi.data.repository.TotalRepository
 import kotlinx.coroutines.launch
+import java.util.Collections.addAll
 
 class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
     companion object {
@@ -39,29 +41,43 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
     val channelItemList: LiveData<List<SaveChannel>>
         get() = _channelItemList
 
-    private val _beforeCategory : MutableLiveData<SaveCategory> = MutableLiveData()
-    val beforeCategory : LiveData<SaveCategory>
+    private val _beforeCategory: MutableLiveData<SaveCategory> = MutableLiveData()
+    val beforeCategory: LiveData<SaveCategory>
         get() = _beforeCategory
+
+
+    private val _pupularState: MutableLiveData<SearchState> = MutableLiveData()
+    val popularState: LiveData<SearchState>
+        get() = _pupularState
+
+
+    private val _categoryState: MutableLiveData<SearchState> = MutableLiveData()
+    val categoryState: LiveData<SearchState>
+        get() = _categoryState
+
 
     init {
         _categories.value = repository.getCateoryListPefs()
     }
 
-    fun getCategoriesListPrefs(){
+    fun getCategoriesListPrefs() {
         _categories.value = repository.getCateoryListPefs()
     }
 
+
     fun getAllMostPopular() = viewModelScope.launch {
+        _pupularState.value = SearchState.Loading("")
         val response = repository.getAllMostPopular()
         if (response.isSuccessful) {
             response.body()?.let { body ->
                 val saveItemList = body.items?.map { it.toSaveItem() }
+                _pupularState.value = SearchState.Finish("", body.nextPageToken ?: "")
                 saveItemList?.let { saveItems ->
                     _popularItemList.value = saveItems
                 }
-                saveItemList?.forEach {
+                /*saveItemList?.forEach {
                     Log.d(TAG, "getAllMostPopular: $it")
-                }
+                }*/
             }
         } else {
             Log.d(TAG, "getAllMostPopular.isNotSuccessful")
@@ -69,9 +85,47 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
         }
     }
 
+    fun getPagingAllMostPopular() = viewModelScope.launch {
+        when (val state = popularState.value) {
+            is SearchState.Loading -> {
+                return@launch
+            }
+
+            is SearchState.Finish -> {
+                _pupularState.value = SearchState.Loading("")
+                val response = repository.getAllMostPopular(
+                    pageToken = state.nextToken
+                )
+                if (response.isSuccessful) {
+                    response.body()?.let { body ->
+                        val saveItemList = body.items?.map { it.toSaveItem() }
+
+                        _pupularState.value =
+                            SearchState.Finish(state.q, body.nextPageToken ?: "")
+                        saveItemList?.let {
+                            _popularItemList.value =
+                                popularItemList.value.orEmpty().toMutableList().apply {
+                                    addAll(it)
+                                }
+                        }
+                    }
+                } else {
+                    _pupularState.value = SearchState.Finish(
+                        "",
+                        state.nextToken
+                    )
+                }
+            }
+
+            else -> {}//null
+        }
+    }
+
+
     fun getAllMostPopularWithCategoryId(videoCategoryId: String) = viewModelScope.launch {
         _channelItemList.value = emptyList()
         channelSet.clear()
+        _categoryState.value = SearchState.Loading(videoCategoryId)
         val response = repository.getAllMostPopularWithCategoryId(videoCategoryId = videoCategoryId)
         if (response.isSuccessful) {
             response.body()?.let { body ->
@@ -83,6 +137,7 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
                         getChannelWithId(it.channelId)
                     }
                 }
+                _categoryState.value = SearchState.Finish(videoCategoryId, body.nextPageToken ?: "")
                 saveItemList?.let { saveItems ->
                     _categoryItemList.value = saveItems
                 }
@@ -90,6 +145,51 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
         } else {
             Log.d(TAG, "getAllMostPopularWithCategoryId.isNotSuccessful")
             Log.d(TAG, response.message())
+        }
+    }
+
+    fun getPagingAllMostPopularWithCategoryId() = viewModelScope.launch {
+        when (val state = categoryState.value) {
+            is SearchState.Loading -> {
+                return@launch
+            }
+
+            is SearchState.Finish -> {
+                _categoryState.value = SearchState.Loading(state.q)
+                val response = repository.getAllMostPopularWithCategoryId(
+                    videoCategoryId = state.q,
+                    pageToken = state.nextToken
+                )
+                if (response.isSuccessful) {
+                    response.body()?.let { body ->
+                        val saveItemList = body.items?.map { it.toSaveItem() }
+                        saveItemList?.forEach {
+                            Log.d(TAG, "getAllMostPopularWithCategoryId: $it")
+                            if (it.channelId != null && it.channelId !in channelSet) {
+                                channelSet.add(it.channelId)
+                                getChannelWithId(it.channelId)
+                            }
+                        }
+
+
+                        _categoryState.value =
+                            SearchState.Finish(state.q, body.nextPageToken ?: "")
+                        saveItemList?.let {
+                            _categoryItemList.value =
+                                categoryItemList.value.orEmpty().toMutableList().apply {
+                                    addAll(it)
+                                }
+                        }
+                    }
+                } else {
+                    _categoryState.value = SearchState.Finish(
+                        state.q,
+                        state.nextToken
+                    )
+                }
+            }
+
+            else -> {}//null
         }
     }
 
@@ -115,7 +215,7 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
                 val saveItemList = body.items?.map { it.toSaveChannel() }
                 saveItemList?.forEach {
                     Log.d(TAG, "getChannelWithId: $it")
-                    val currentList =  channelItemList.value.orEmpty().toMutableList()
+                    val currentList = channelItemList.value.orEmpty().toMutableList()
                     currentList.add(it)
                     _channelItemList.value = currentList
                 }
@@ -126,7 +226,7 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
         }
     }
 
-    fun setCurrentCategory(category: SaveCategory){
+    fun setCurrentCategory(category: SaveCategory) {
         _beforeCategory.value = category
     }
 }
