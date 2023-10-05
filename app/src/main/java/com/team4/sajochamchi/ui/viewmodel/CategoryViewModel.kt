@@ -62,6 +62,7 @@ class CategoryViewModel(private val repository: TotalRepository) : ViewModel() {
     fun addCategory(unselectedPosition:Int,category: SaveCategory) {
         val selectedList = selectedCategory.value.orEmpty().toMutableList()
         val unselectedList = unselectedCategory.value.orEmpty().toMutableList()
+        if (unselectedPosition !in unselectedList.indices || unselectedList[unselectedPosition] != category) return
         selectedList.add(category)
         unselectedList.removeAt(unselectedPosition)
         repository.saveCateoryListPrefs(selectedList)
@@ -72,6 +73,7 @@ class CategoryViewModel(private val repository: TotalRepository) : ViewModel() {
     fun removeCategory(selectedPosition: Int,category: SaveCategory) {
         val selectedList = selectedCategory.value.orEmpty().toMutableList()
         val unselectedList = unselectedCategory.value.orEmpty().toMutableList()
+        if (selectedPosition !in selectedList.indices || selectedList[selectedPosition] != category) return
         selectedList.removeAt(selectedPosition)
         for ((idx,value ) in unselectedList.withIndex()){
             if (value.id!! > category.id!!){

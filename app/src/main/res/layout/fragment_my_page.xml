@@ -29,9 +29,10 @@
         app:layout_constraintTop_toTopOf="@+id/logo_image_view" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,4 +130,21 @@
                 android:paddingBottom="80dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+    <View
+        android:background="@drawable/background_gradient_start"
+        android:layout_width="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="match_parent"/>
+
+    <View
+        android:background="@drawable/background_gradient_end"
+        android:layout_width="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="match_parent"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@drawable/background_gradient_bottom"
+        app:layout_constraintTop_toTopOf="@+id/nestedScrollView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
