@@ -9,12 +9,6 @@ https://www.figma.com/file/MJCpnZA8XTTt3sqUWoEZOT/Untitled?type=design&node-id=0
 
 ![스크린샷 2023-10-05 오후 8 29 27](https://github.com/Team-NBK-04/sajo-chamchi/assets/81704418/28acd35d-a4e6-4a1a-bdbd-551f2b053160)
 
-
-### Introduction
-
-- 사조참치의 매력이 담긴 동영상 플랫폼 앱.
-- 동영상 검색을 통해 본인이 원하는 영상을 찾을 수 있고 검색어 추천이나 영상 보관을 통해 편리하게 관련 영상을 찾거나 나중에 다시 시청해 볼 수 있습니다.
-
 ### Development Environment
 
 - Android Studio
@@ -26,6 +20,11 @@ https://www.figma.com/file/MJCpnZA8XTTt3sqUWoEZOT/Untitled?type=design&node-id=0
 - compileSDK : 33
 - minSDK : 26
 - targetSDK :33
+
+### Introduction
+
+- 사조참치의 매력이 담긴 동영상 플랫폼 앱.
+- 동영상 검색을 통해 본인이 원하는 영상을 찾을 수 있고 검색어 추천이나 영상 보관을 통해 편리하게 관련 영상을 찾거나 나중에 다시 시청해 볼 수 있습니다.
 
 # Description
 
