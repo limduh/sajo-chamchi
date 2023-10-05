@@ -69,7 +69,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="25dp"
-                android:src="@drawable/img_up_arrow"
+                android:src="@drawable/selector_arrow"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_select_dialog"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -113,7 +113,7 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="35dp"
                 android:layout_marginEnd="25dp"
-                android:src="@drawable/img_up_arrow"
+                android:src="@drawable/selector_arrow"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rv_selected_dialog" />
 

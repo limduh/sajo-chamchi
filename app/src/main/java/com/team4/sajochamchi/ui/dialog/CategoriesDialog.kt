@@ -117,7 +117,9 @@ class CategoriesDialog(private val eventListener: EventListener) :
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             setHasFixedSize(false)
             isNestedScrollingEnabled = true
-            addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL))
+            addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL).apply {
+                setDrawable(requireContext().resources.getDrawable(com.team4.sajochamchi.R.drawable.recyclerview_divider))
+            })
         }
 
         rvSelectedDialog.apply {
@@ -125,7 +127,9 @@ class CategoriesDialog(private val eventListener: EventListener) :
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
             setHasFixedSize(false)
             isNestedScrollingEnabled = true
-            addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL))
+            addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL).apply {
+                setDrawable(requireContext().resources.getDrawable(com.team4.sajochamchi.R.drawable.recyclerview_divider))
+            })
         }
 
         closeImageButton.setOnClickListener {
