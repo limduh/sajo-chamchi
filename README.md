@@ -7,7 +7,8 @@
 
 https://www.figma.com/file/MJCpnZA8XTTt3sqUWoEZOT/Untitled?type=design&node-id=0-1&mode=design&t=UReBcifDmTBmzxai-0
 
-![스크린샷 2023-10-05 오후 8.29.27.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/4adb83f7-f6ae-471d-bab2-879b09138e41/9914f447-a005-4fc4-a29c-2d75ebb49e04/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2023-10-05_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_8.29.27.png)
+![스크린샷 2023-10-05 오후 8 29 27](https://github.com/Team-NBK-04/sajo-chamchi/assets/81704418/28acd35d-a4e6-4a1a-bdbd-551f2b053160)
+
 
 ### Introduction
 
