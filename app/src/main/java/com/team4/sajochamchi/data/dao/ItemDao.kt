@@ -18,9 +18,6 @@ interface ItemDao {
     @Query("SELECT * FROM SaveItem")
     fun getAll(): Flow<List<SaveItem>>
 
-    /*@Query("SELECT * FROM SaveItem WHERE id =:id")
-    fun getOne(id: Int): SaveItem?
-
     @Query("SELECT * FROM SaveItem WHERE videoId = :videoId")
-    fun getAllWithVideoId(videoId: String): List<SaveItem>*/
+    fun getAllWithVideoId(videoId: String): Flow<List<SaveItem>>
 }

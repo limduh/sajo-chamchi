@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.team4.sajochamchi.data.model.SaveItem
 import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.FragmentMyPageBinding
+import com.team4.sajochamchi.ui.activity.WebViewActivity
 import com.team4.sajochamchi.ui.adapter.SaveVideoAdapter
 import com.team4.sajochamchi.ui.dialog.EditDialog
 import com.team4.sajochamchi.ui.dialog.ViewDetailDialog
@@ -29,8 +31,10 @@ class MyPageFragment : Fragment() {
 
     private val mainSharedViewModel: MainSharedViewModel by activityViewModels()
     private val saveVideoAdapter : SaveVideoAdapter by lazy {
-        SaveVideoAdapter(){ saveItem ->
-
+        SaveVideoAdapter(){ video ->
+            val dialog =
+                ViewDetailDialog.newInstance(video)
+            dialog.show(this@MyPageFragment.childFragmentManager, "Detail Dialog")
         }
     }
 
@@ -75,23 +79,6 @@ class MyPageFragment : Fragment() {
 
                 }
             )
-            dialog.show(this@MyPageFragment.childFragmentManager, "Detail Dialog")
-        }
-
-        detailDialogButton.setOnClickListener {
-            val dialog = ViewDetailDialog.newInstance(object : ViewDetailDialog.ClickEventListener {
-                override fun shareButtonClicked() {
-
-                }
-
-                override fun favoriteButtonClicked() {
-
-                }
-
-                override fun thumbnailImageClicked() {
-
-                }
-            })
             dialog.show(this@MyPageFragment.childFragmentManager, "Detail Dialog")
         }
     }

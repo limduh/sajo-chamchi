@@ -9,7 +9,8 @@
 
     <View
         android:id="@+id/top_bar_view"
-        android:layout_width="314dp"
+        android:layout_width="0dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_height="61dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/background_circle_deep_blue"
@@ -39,6 +40,8 @@
         app:layout_constraintStart_toStartOf="@id/close_image_button"
         app:layout_constraintTop_toTopOf="@id/top_bar_view" />
 
+
+
     <ImageView
         android:id="@+id/share_image_button"
         android:layout_width="24dp"
@@ -49,53 +52,94 @@
         app:layout_constraintEnd_toEndOf="@id/top_bar_view"
         app:layout_constraintTop_toTopOf="@id/top_bar_view" />
 
-    <ImageView
-        android:id="@+id/img_thumbnail"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/top_bar_view"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:src="@color/black"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/img_favorite"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/img_thumbnail"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/img_thumbnail"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginTop="20dp"
-        >
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:fontFamily="@font/lobster_regular"
-            android:textSize="20sp"
-            android:text="Video Title"/>
-        <TextView
-            android:id="@+id/tv_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/tauri_regular"
-            android:textSize="12sp"
-            android:text="description"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_marginHorizontal="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="30dp"
+                android:elevation="0dp"
+                app:cardElevation="0dp"
+                >
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <ImageView
+                        android:id="@+id/img_thumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
+                    <View
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/background_gradient"/>
+                    <ImageView
+                        android:id="@+id/favorite_image_view"
+                        android:layout_width="24dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/selector_favorite"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/img_thumbnail"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
+            </androidx.cardview.widget.CardView>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/card_view">
+
+                <TextView
+                    android:id="@+id/title_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lobster_regular"
+                    android:text="Video Title"
+                    android:textSize="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textColor="@color/deep_dark_brown"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/desc_text_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/tauri_regular"
+                    android:paddingBottom="50dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="description"
+                    android:textSize="12sp"
+                    android:textColor="@color/deep_dark_brown"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title_text_view" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

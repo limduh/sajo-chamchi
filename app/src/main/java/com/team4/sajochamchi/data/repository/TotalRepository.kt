@@ -24,6 +24,7 @@ interface TotalRepository {
 
     // Room
     val allSaveItems : Flow<List<SaveItem>>
+    val isSaveItems : Flow<List<SaveItem>>
     suspend fun insert(saveItem: SaveItem)
     suspend fun delete(saveItem: SaveItem)
 
