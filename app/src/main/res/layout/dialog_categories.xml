@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_top_round_border">
 
     <View
         android:id="@+id/top_bar_view"
-        android:layout_width="314dp"
+        android:layout_width="0dp"
         android:layout_height="61dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/background_circle_deep_blue"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,6 +39,119 @@
         app:layout_constraintEnd_toEndOf="@id/top_bar_view"
         app:layout_constraintStart_toStartOf="@id/top_bar_view"
         app:layout_constraintTop_toTopOf="@id/top_bar_view" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:descendantFocusability="blocksDescendants"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar_view">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:focusableInTouchMode="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_select_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:fontFamily="@font/lobster_regular"
+                android:text="Selected Categories"
+                android:textColor="@color/deep_dark_brown"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/selected_visible_image_view"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="25dp"
+                android:src="@drawable/selector_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_select_dialog"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/line_select_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:background="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/tv_select_dialog" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_selected_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line_select_dialog"
+                tools:listitem="@layout/item_selected_categories" />
+
+            <TextView
+                android:id="@+id/tv_unselect_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="35dp"
+                android:fontFamily="@font/lobster_regular"
+                android:text="UnSelected Categories"
+                android:textColor="@color/deep_dark_brown"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_selected_dialog" />
+
+            <ImageView
+                android:id="@+id/unselected_visible_image_view"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="25dp"
+                android:src="@drawable/selector_arrow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_selected_dialog" />
+
+            <View
+                android:id="@+id/line_unselect_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:background="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/tv_unselect_dialog" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_unselected_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line_unselect_dialog"
+                tools:listitem="@layout/item_unselected_categories" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_unselected_dialog" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

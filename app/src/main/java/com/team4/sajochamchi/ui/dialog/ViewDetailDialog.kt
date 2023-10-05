@@ -1,38 +1,47 @@
 package com.team4.sajochamchi.ui.dialog
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.team4.sajochamchi.data.model.SaveItem
+import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.DialogViewDetailBinding
+import com.team4.sajochamchi.ui.activity.WebViewActivity
+import com.team4.sajochamchi.ui.viewmodel.HomeViewModel
+import com.team4.sajochamchi.ui.viewmodel.HomeViewModelFactory
+import com.team4.sajochamchi.ui.viewmodel.ViewDetailViewModel
+import com.team4.sajochamchi.ui.viewmodel.ViewDetailViewModelFactory
 
 
-class ViewDetailDialog(private val clickEventListener: ClickEventListener) :
-    BottomSheetDialogFragment() {
+class ViewDetailDialog(
+    private val video: SaveItem,
+) : BottomSheetDialogFragment() {
 
     companion object {
-        fun newInstance(clickEventListener: ClickEventListener) =
-            ViewDetailDialog(clickEventListener)
+        fun newInstance(
+            saveItem: SaveItem,
+        ) = ViewDetailDialog(saveItem)
     }
 
-    interface ClickEventListener {
-        //공유 버튼 클릭시 동작할 기능
-        fun shareButtonClicked()
-
-        //좋아요 버튼 클릭시 동작할 기능
-        fun favoriteButtonClicked()
-
-        //썸네일 이미지 클릭시 동작할 기능
-        fun thumbnailImageClicked()
-    }
 
     private var _binding: DialogViewDetailBinding? = null
     private val binding: DialogViewDetailBinding
         get() = _binding!!
+
+    private val viewDetailViewModel: ViewDetailViewModel by viewModels() {
+        ViewDetailViewModelFactory(
+            video,
+            TotalRepositoryImpl(requireContext(), video.videoId.orEmpty())
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,16 +70,52 @@ class ViewDetailDialog(private val clickEventListener: ClickEventListener) :
         }
 
         initViews()
+        initViewModels()
     }
 
     private fun initViews() = with(binding) {
+        Glide.with(requireContext())
+            .load(video.thumbnailsUrl.orEmpty())
+            .into(imgThumbnail)
+
+        titleTextView.text = video.title
+        descTextView.text = video.description
+
+        favoriteImageView.setOnClickListener {
+            if (favoriteImageView.isSelected){
+                viewDetailViewModel.deleteItem(video)
+            } else {
+                viewDetailViewModel.favoriteItem(video)
+            }
+            //clickEventListener.favoriteButtonClicked(video, favoriteImageView.isSelected)
+            favoriteImageView.isSelected = !favoriteImageView.isSelected
+        }
+
+        imgThumbnail.setOnClickListener {
+            startActivity(
+                WebViewActivity.newIntent(
+                    requireContext(),
+                    video.title.orEmpty(),
+                    "https://www.youtube.com/watch?v=${video.videoId.orEmpty()}"
+                )
+            )
+        }
 
         closeImageButton.setOnClickListener {
             dismiss()
         }
 
         shareImageButton.setOnClickListener {
-            clickEventListener.shareButtonClicked()
+            // clickEventListener.shareButtonClicked()
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    "https://www.youtube.com/watch?v=${video.videoId.orEmpty()}"// 전달하려는 Data(Value)
+                )
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(shareIntent, null))
         }
         //드래그 방지
         try {
@@ -88,6 +133,14 @@ class ViewDetailDialog(private val clickEventListener: ClickEventListener) :
             e.printStackTrace()
         } catch (e: IllegalAccessException) {
             e.printStackTrace()
+        }
+    }
+
+    private fun initViewModels() {
+        with(viewDetailViewModel) {
+            isFavorite.observe(viewLifecycleOwner) { list ->
+                binding.favoriteImageView.isSelected = list.isNotEmpty()
+            }
         }
     }
 

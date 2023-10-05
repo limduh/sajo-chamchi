@@ -6,6 +6,9 @@ plugins {
     id 'kotlin-kapt'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     namespace 'com.team4.sajochamchi'
     compileSdk 33
@@ -20,10 +23,18 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "SAMPLE_API_KEY", properties["API_KEY"]
+        }
+        debug {
+            buildConfigField "String", "SAMPLE_API_KEY", properties["API_KEY"]
         }
     }
     compileOptions {
@@ -46,6 +57,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    //use glide
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
     // use gson
     implementation 'com.google.code.gson:gson:2.10.1'
     //use viewmodel
@@ -65,6 +78,9 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
+    // use aslivedata
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
