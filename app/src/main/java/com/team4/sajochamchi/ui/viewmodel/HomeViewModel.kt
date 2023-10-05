@@ -42,6 +42,10 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
         _categories.value = repository.getCateoryListPefs()
     }
 
+    fun getCategoriesListPrefs(){
+        _categories.value = repository.getCateoryListPefs()
+    }
+
     fun getAllMostPopular() = viewModelScope.launch {
         val response = repository.getAllMostPopular()
         if (response.isSuccessful) {
