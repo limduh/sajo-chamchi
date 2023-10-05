@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide.init
 import com.team4.sajochamchi.data.model.SaveCategory
 import com.team4.sajochamchi.data.model.SaveChannel
 import com.team4.sajochamchi.data.model.SaveItem
@@ -38,6 +39,10 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
     val channelItemList: LiveData<List<SaveChannel>>
         get() = _channelItemList
 
+    private val _beforeCategory : MutableLiveData<SaveCategory> = MutableLiveData()
+    val beforeCategory : LiveData<SaveCategory>
+        get() = _beforeCategory
+
     init {
         _categories.value = repository.getCateoryListPefs()
     }
@@ -65,6 +70,8 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
     }
 
     fun getAllMostPopularWithCategoryId(videoCategoryId: String) = viewModelScope.launch {
+        _channelItemList.value = emptyList()
+        channelSet.clear()
         val response = repository.getAllMostPopularWithCategoryId(videoCategoryId = videoCategoryId)
         if (response.isSuccessful) {
             response.body()?.let { body ->
@@ -86,7 +93,7 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
         }
     }
 
-    fun getAllCategories() = viewModelScope.launch {
+    /*fun getAllCategories() = viewModelScope.launch {
         val response = repository.getAllCategories()
         if (response.isSuccessful) {
             response.body()?.let { body ->
@@ -99,7 +106,7 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
             Log.d(TAG, "getAllCategories.isNotSuccessful")
             Log.d(TAG, response.message())
         }
-    }
+    }*/
 
     private fun getChannelWithId(id: String) = viewModelScope.launch {
         val response = repository.getChannelWithId(id)
@@ -117,6 +124,10 @@ class HomeViewModel(private val repository: TotalRepository) : ViewModel() {
             Log.d(TAG, "getAllCategories.isNotSuccessful")
             Log.d(TAG, response.message())
         }
+    }
+
+    fun setCurrentCategory(category: SaveCategory){
+        _beforeCategory.value = category
     }
 }
 

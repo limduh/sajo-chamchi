@@ -48,13 +48,18 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_margin="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@color/deep_dark_brown" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/category_button_recycler_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/region_list"
+                android:paddingHorizontal="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:singleSelection="true"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/category_video_recycler_view"
@@ -74,35 +79,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/channels_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-
-            <Button
-                android:id="@+id/detail_dialog_button"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/deep_dark_brown"
-                android:text="DETAIL DIALOG" />
+                android:paddingBottom="80dp"/>
 
-            <Button
-                android:id="@+id/web_view_activity_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/deep_dark_brown"
-                android:text="WEB VIEW ACTIVITY" />
 
-            <Button
-                android:id="@+id/categories_dialog_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/deep_dark_brown"
-                android:text="CATEGORIES DIALOG" />
         </LinearLayout>
     </ScrollView>
 

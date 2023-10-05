@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.chip.Chip
+import com.team4.sajochamchi.R
 import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.FragmentHomeBinding
 import com.team4.sajochamchi.ui.activity.WebViewActivity
@@ -97,14 +99,6 @@ class HomeFragment : Fragment() {
             adapter = channelAdapter
         }
 
-        categoriesDialogButton.setOnClickListener {
-            val dialog = CategoriesDialog.newInstance(object : CategoriesDialog.EventListener {
-                override fun onDismiss() {
-                    homeViewModel.getCategoriesListPrefs()
-                }
-            })
-            dialog.show(this@HomeFragment.childFragmentManager, "Categories Dialog")
-        }
     }
 
     private fun initViewModels() {
@@ -120,6 +114,44 @@ class HomeFragment : Fragment() {
             channelItemList.observe(viewLifecycleOwner) { list ->
                 channelAdapter.submitList(list)
             }
+
+            categories.observe(viewLifecycleOwner) { list ->
+                val chipGroup = binding.regionList
+                val inflator = LayoutInflater.from(chipGroup.context)
+                val currnetCategory = beforeCategory.value
+
+                val children = list.map { cateogry ->
+                    val chip = inflator.inflate(R.layout.region, chipGroup, false) as Chip
+                    chip.text = cateogry.title
+                    chip.tag = cateogry.id
+                    chip.isChecked = currnetCategory?.id == cateogry.id
+                    chip.setOnCheckedChangeListener { button, isChecked ->
+                        if (isChecked) {
+                            homeViewModel.getAllMostPopularWithCategoryId(cateogry.id ?: "0")
+                            homeViewModel.setCurrentCategory(cateogry)
+                        }
+                    }
+                    chip // 새로운 리스트 반환
+                }
+                val chip = inflator.inflate(R.layout.region, chipGroup, false) as Chip
+                chip.text = "Add Category +"
+                chip.tag = "last"
+                chip.isCheckable = false
+                chip.setOnClickListener {
+                    val dialog =
+                        CategoriesDialog.newInstance(object : CategoriesDialog.EventListener {
+                            override fun onDismiss() {
+                                homeViewModel.getCategoriesListPrefs()
+                            }
+                        })
+                    dialog.show(this@HomeFragment.childFragmentManager, "Categories Dialog")
+                }
+                chipGroup.removeAllViews()
+                for (c in children) chipGroup.addView(c)
+                chipGroup.addView(chip)
+
+            }
+
         }
 
         with(mainSharedViewModel) {
