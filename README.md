@@ -1,4 +1,4 @@
-# sajo-chamchi
+# Team-NBK-04 / sajo-chamchi project
 # Team Member
 
 임주리 김성환 임두형 이예원
