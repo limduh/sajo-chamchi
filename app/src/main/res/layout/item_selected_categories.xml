@@ -6,9 +6,10 @@
 
     <ImageView
         android:id="@+id/drag_drop"
-        android:layout_width="15dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+
+        android:padding="12dp"
         android:src="@drawable/img_drag_drop"
         app:layout_constraintBottom_toBottomOf="@+id/tv_seleceted_category_name"
         app:layout_constraintStart_toStartOf="parent"

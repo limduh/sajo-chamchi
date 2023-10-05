@@ -85,6 +85,14 @@ class CategoryViewModel(private val repository: TotalRepository) : ViewModel() {
         _unselectedCategory.value = unselectedList
     }
 
+    fun onSelectedItemMove(from:Int,to:Int){
+        val selectedList = selectedCategory.value.orEmpty().toMutableList()
+        val item = selectedList[from]
+        selectedList.removeAt(from)
+        selectedList.add(to,item)
+        repository.saveCateoryListPrefs(selectedList)
+        _selectedCategory.value = selectedList
+    }
 }
 
 class CategoryViewModelFactory(
