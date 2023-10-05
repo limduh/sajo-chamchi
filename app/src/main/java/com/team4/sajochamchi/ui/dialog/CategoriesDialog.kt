@@ -112,6 +112,30 @@ class CategoriesDialog(private val eventListener: EventListener) :
 
 
     private fun initViews() = with(binding) {
+        selectedVisibleImageView.apply {
+            isSelected = true
+            setOnClickListener {
+                if (isSelected){
+                    rvSelectedDialog.visibility = View.GONE
+                }else{
+                    rvSelectedDialog.visibility = View.VISIBLE
+                }
+                isSelected = !isSelected
+            }
+        }
+
+        unselectedVisibleImageView.apply {
+            isSelected = true
+            setOnClickListener {
+                if (isSelected){
+                    rvUnselectedDialog.visibility = View.GONE
+                }else{
+                    rvUnselectedDialog.visibility = View.VISIBLE
+                }
+                isSelected = !isSelected
+            }
+        }
+
         rvUnselectedDialog.apply {
             adapter = unselectedadapter
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
