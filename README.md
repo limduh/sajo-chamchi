@@ -4,7 +4,6 @@
 임주리 김성환 임두형 이예원
 
 ### Wireframe
-figma Link
 
 https://www.figma.com/file/MJCpnZA8XTTt3sqUWoEZOT/Untitled?type=design&node-id=0-1&mode=design&t=UReBcifDmTBmzxai-0
 
