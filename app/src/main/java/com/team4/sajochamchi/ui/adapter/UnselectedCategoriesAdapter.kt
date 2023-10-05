@@ -1,13 +1,12 @@
 package com.team4.sajochamchi.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.team4.sajochamchi.data.model.SaveCategory
-import com.team4.sajochamchi.databinding.ItemSelectedCategoriesBinding
 import com.team4.sajochamchi.databinding.ItemUnselectedCategoriesBinding
 
 class UnselectedCategoriesAdapter(private val itemClick: ItemClick) :
@@ -22,8 +21,13 @@ class UnselectedCategoriesAdapter(private val itemClick: ItemClick) :
             }
         }
     ) {
+    
+    companion object{
+        private const val TAG = "UnselectedCategoriesAda"
+    }
+    
     interface ItemClick {
-        fun onClick(saveCategory: SaveCategory)
+        fun onClick(position: Int, saveCategory: SaveCategory)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,6 +36,7 @@ class UnselectedCategoriesAdapter(private val itemClick: ItemClick) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.d(TAG, "onBindViewHolder: $position")
         holder.bind()
     }
 
@@ -42,7 +47,7 @@ class UnselectedCategoriesAdapter(private val itemClick: ItemClick) :
             val currentItem = currentList[pos]
             tvUnselectedCategoryName.text = currentItem.title
             addImageView.setOnClickListener {
-                itemClick.onClick(currentItem)
+                itemClick.onClick(adapterPosition,currentItem)
             }
         }
     }

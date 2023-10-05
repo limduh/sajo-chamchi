@@ -3,11 +3,13 @@ package com.team4.sajochamchi.ui.dialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.R
@@ -16,15 +18,21 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.team4.sajochamchi.data.model.SaveCategory
+import com.team4.sajochamchi.data.repository.TotalRepositoryImpl
 import com.team4.sajochamchi.databinding.DialogCategoriesBinding
 import com.team4.sajochamchi.ui.adapter.SelectedCategoriesAdpter
 import com.team4.sajochamchi.ui.adapter.UnselectedCategoriesAdapter
+import com.team4.sajochamchi.ui.viewmodel.CategoryViewModel
+import com.team4.sajochamchi.ui.viewmodel.CategoryViewModelFactory
+import com.team4.sajochamchi.ui.viewmodel.ViewDetailViewModel
+import com.team4.sajochamchi.ui.viewmodel.ViewDetailViewModelFactory
 
 
 class CategoriesDialog(private val eventListener: EventListener) :
     BottomSheetDialogFragment() {
 
     companion object {
+        private const val TAG = "CategoriesDialog"
         fun newInstance(eventListener: EventListener) =
             CategoriesDialog(eventListener)
     }
@@ -36,6 +44,28 @@ class CategoriesDialog(private val eventListener: EventListener) :
     private var _binding: DialogCategoriesBinding? = null
     private val binding: DialogCategoriesBinding
         get() = _binding!!
+
+    private val categoryViewModel: CategoryViewModel by viewModels() {
+        CategoryViewModelFactory(
+            TotalRepositoryImpl(requireContext())
+        )
+    }
+
+    private val unselectedadapter : UnselectedCategoriesAdapter by lazy {
+        UnselectedCategoriesAdapter( object :UnselectedCategoriesAdapter.ItemClick{
+            override fun onClick(position: Int, saveCategory: SaveCategory) {
+                categoryViewModel.addCategory(position,saveCategory)
+            }
+        })
+    }
+
+    private val selectedadapter : SelectedCategoriesAdpter by lazy {
+        SelectedCategoriesAdpter(object : SelectedCategoriesAdpter.ItemClick{
+            override fun onClick(position: Int, saveCategory: SaveCategory) {
+                categoryViewModel.removeCategory(position,saveCategory)
+            }
+        })
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -76,41 +106,25 @@ class CategoriesDialog(private val eventListener: EventListener) :
         }
 
         initViews()
+        initViewModels()
     }
 
+
+
     private fun initViews() = with(binding) {
-
-        val unselectedItems = ArrayList<SaveCategory>()
-        val selecedItems = ArrayList<SaveCategory>()
-        unselectedItems.add(SaveCategory("dd","dd"))
-        unselectedItems.add(SaveCategory("dd","dd"))
-        unselectedItems.add(SaveCategory("dd","dd"))
-        selecedItems.add(SaveCategory("dd","dd"))
-        selecedItems.add(SaveCategory("dd","dd"))
-        selecedItems.add(SaveCategory("dd","dd"))
-
-        val unselectedadapter = UnselectedCategoriesAdapter( object :UnselectedCategoriesAdapter.ItemClick{
-            override fun onClick(saveCategory: SaveCategory) {
-
-            }
-
-        })
-        val selectedadapter = SelectedCategoriesAdpter(object : SelectedCategoriesAdpter.ItemClick{
-            override fun onClick(saveCategory: SaveCategory) {
-
-            }
-        })
         rvUnselectedDialog.apply {
             adapter = unselectedadapter
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            setHasFixedSize(true)
+            setHasFixedSize(false)
+            isNestedScrollingEnabled = true
             addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL))
         }
 
         rvSelectedDialog.apply {
-            adapter = unselectedadapter
+            adapter = selectedadapter
             layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-            setHasFixedSize(true)
+            setHasFixedSize(false)
+            isNestedScrollingEnabled = true
             addItemDecoration(DividerItemDecoration(requireContext(), LinearLayout.VERTICAL))
         }
 
@@ -135,6 +149,20 @@ class CategoriesDialog(private val eventListener: EventListener) :
             e.printStackTrace()
         } catch (e: IllegalAccessException) {
             e.printStackTrace()
+        }
+    }
+
+    private fun initViewModels() {
+        with(categoryViewModel){
+            selectedCategory.observe(viewLifecycleOwner){ list ->
+                Log.d(TAG, "initViewModels: selected : ${list.size}")
+                selectedadapter.submitList(list)
+            }
+            unselectedCategory.observe(viewLifecycleOwner){ list ->
+                Log.d(TAG, "initViewModels: unselected : ${list.size}")
+                unselectedadapter.submitList(list)
+                Log.d(TAG, "initViewModels: ${binding.rvUnselectedDialog.adapter?.itemCount}")
+            }
         }
     }
 
