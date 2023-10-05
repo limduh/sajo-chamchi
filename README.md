@@ -5,6 +5,7 @@
 
 ### Wireframe
 figma Link
+
 https://www.figma.com/file/MJCpnZA8XTTt3sqUWoEZOT/Untitled?type=design&node-id=0-1&mode=design&t=UReBcifDmTBmzxai-0
 
 ![스크린샷 2023-10-05 오후 8 29 27](https://github.com/Team-NBK-04/sajo-chamchi/assets/81704418/28acd35d-a4e6-4a1a-bdbd-551f2b053160)
