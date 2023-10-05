@@ -1,9 +1,9 @@
 # sajo-chamchi
-### Team Member
+# Team Member
 
 임주리 김성환 임두형 이예원
 
-### Wireframe
+# Wireframe
 
 https://www.figma.com/file/MJCpnZA8XTTt3sqUWoEZOT/Untitled?type=design&node-id=0-1&mode=design&t=UReBcifDmTBmzxai-0
 
@@ -14,14 +14,14 @@ https://www.figma.com/file/MJCpnZA8XTTt3sqUWoEZOT/Untitled?type=design&node-id=0
 - Android Studio
 - Kotlin 1.8.0
 
-### Application Version
+# Application Version
 
 - SDK version : Android 12
 - compileSDK : 33
 - minSDK : 26
 - targetSDK :33
 
-### Introduction
+# Introduction
 
 - 사조참치의 매력이 담긴 동영상 플랫폼 앱.
 - 동영상 검색을 통해 본인이 원하는 영상을 찾을 수 있고 검색어 추천이나 영상 보관을 통해 편리하게 관련 영상을 찾거나 나중에 다시 시청해 볼 수 있습니다.
