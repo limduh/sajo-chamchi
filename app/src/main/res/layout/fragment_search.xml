@@ -21,7 +21,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,6 +34,7 @@
             android:id="@+id/search_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -57,6 +57,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/lobster_regular"
             android:text="Recently Search"
+            android:layout_marginHorizontal="20dp"
             android:textColor="@color/deep_dark_brown"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,14 +67,16 @@
             android:id="@+id/search_history_status_image_view"
             android:layout_width="29dp"
             android:layout_height="29dp"
+            android:layout_marginHorizontal="20dp"
             android:background="@drawable/selector_arrow"
             app:layout_constraintBottom_toBottomOf="@+id/recently_search_text_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/recently_search_text_view" />
 
         <View
+            android:layout_marginHorizontal="20dp"
             android:id="@+id/view"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="2dp"
             android:background="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -94,12 +97,15 @@
                 android:layout_height="60dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="20dp"
                 tools:listitem="@layout/item_horizontal_string"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
+                android:layout_marginHorizontal="20dp"
                 android:id="@+id/history_empty_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -123,9 +129,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/no_search"
             android:layout_width="0dp"
+
+            android:layout_marginHorizontal="20dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -172,12 +181,29 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
+            android:layout_marginHorizontal="20dp"
             android:paddingBottom="80dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/total_recentry_view" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@drawable/background_gradient_bottom"
+            app:layout_constraintTop_toBottomOf="@+id/total_recentry_view" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:background="@drawable/background_gradient_start"
+        android:layout_width="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="match_parent"/>
+
+    <View
+        android:background="@drawable/background_gradient_end"
+        android:layout_width="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="match_parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
