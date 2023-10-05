@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
     private val binding: FragmentHomeBinding
         get() = _binding!!
 
-    private val homeViewModel: HomeViewModel by viewModels() {
+    private val homeViewModel: HomeViewModel by activityViewModels() {
         HomeViewModelFactory(TotalRepositoryImpl(requireContext()))
     }
     private val mainSharedViewModel: MainSharedViewModel by activityViewModels()

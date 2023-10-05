@@ -35,7 +35,7 @@ class SearchFragment : Fragment() {
     private val binding: FragmentSearchBinding
         get() = _binding!!
 
-    private val searchViewModel: SearchViewModel by viewModels {
+    private val searchViewModel: SearchViewModel by activityViewModels() {
         SearchViewModelFactory(TotalRepositoryImpl(requireContext()))
     }
     private val mainSharedViewModel: MainSharedViewModel by activityViewModels()

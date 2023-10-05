@@ -28,38 +28,42 @@ class CategoryViewModel(private val repository: TotalRepository) : ViewModel() {
         getAllCategory()
     }
 
-    private fun getAllCategory() = viewModelScope.launch {
-        val response = repository.getAllCategories()
-        if (response.isSuccessful) {
-            response.body()?.let { body ->
-                val saveCategoryList = body.items.orEmpty().map {
-                    it.toSaveCategory()
-                }
-                val selectedList = repository.getCateoryListPefs().toMutableList()
-                val checkedArr = BooleanArray(selectedList.size)
-                val unSelectedList = mutableListOf<SaveCategory>()
-                saveCategoryList.forEach { category ->
-                    var isIn = false
-                    for ((idx, value) in selectedList.withIndex()) {
-                        if (!checkedArr[idx] && category.title == value.title) {
-                            if (category.id != value.title) {
-                                selectedList[idx] = value.copy(id = category.id)
-                            }
-                            isIn = true
-                            checkedArr[idx] = true
-                            break
-                        }
+    private fun getAllCategory() {
+        val saveCategoryList = listOf<SaveCategory>(
+            SaveCategory("1", "Film & Animation"),
+            SaveCategory("2", "Autos & Vehicles"),
+            SaveCategory("15", "Pets & Animals"),
+            SaveCategory("17", "Sports"),
+            SaveCategory("20", "Gaming"),
+            SaveCategory("22", "People & Blogs"),
+            SaveCategory("23", "Comedy"),
+            SaveCategory("25", "News & Politics"),
+            SaveCategory("26", "Howto & Style"),
+            SaveCategory("28", "Science & Technology"),
+            )
+        val selectedList = repository.getCateoryListPefs().toMutableList()
+        val checkedArr = BooleanArray(selectedList.size)
+        val unSelectedList = mutableListOf<SaveCategory>()
+        saveCategoryList.forEach { category ->
+            var isIn = false
+            for ((idx, value) in selectedList.withIndex()) {
+                if (!checkedArr[idx] && category.title == value.title) {
+                    if (category.id != value.title) {
+                        selectedList[idx] = value.copy(id = category.id)
                     }
-                    if (!isIn) unSelectedList.add(category)
+                    isIn = true
+                    checkedArr[idx] = true
+                    break
                 }
-                repository.saveCateoryListPrefs(selectedList)
-                _selectedCategory.value = selectedList
-                _unselectedCategory.value = unSelectedList
             }
+            if (!isIn) unSelectedList.add(category)
         }
+        repository.saveCateoryListPrefs(selectedList)
+        _selectedCategory.value = selectedList
+        _unselectedCategory.value = unSelectedList
     }
 
-    fun addCategory(unselectedPosition:Int,category: SaveCategory) {
+    fun addCategory(unselectedPosition: Int, category: SaveCategory) {
         val selectedList = selectedCategory.value.orEmpty().toMutableList()
         val unselectedList = unselectedCategory.value.orEmpty().toMutableList()
         if (unselectedPosition !in unselectedList.indices || unselectedList[unselectedPosition] != category) return
@@ -70,28 +74,22 @@ class CategoryViewModel(private val repository: TotalRepository) : ViewModel() {
         _unselectedCategory.value = unselectedList
     }
 
-    fun removeCategory(selectedPosition: Int,category: SaveCategory) {
+    fun removeCategory(selectedPosition: Int, category: SaveCategory) {
         val selectedList = selectedCategory.value.orEmpty().toMutableList()
         val unselectedList = unselectedCategory.value.orEmpty().toMutableList()
         if (selectedPosition !in selectedList.indices || selectedList[selectedPosition] != category) return
         selectedList.removeAt(selectedPosition)
-        for ((idx,value ) in unselectedList.withIndex()){
-            if (value.id!! > category.id!!){
-                unselectedList.add(idx,category)
-                break
-            }
-            if (idx == unselectedList.lastIndex) unselectedList.add(category)
-        }
+        unselectedList.add(category)
         repository.saveCateoryListPrefs(selectedList)
         _selectedCategory.value = selectedList
         _unselectedCategory.value = unselectedList
     }
 
-    fun onSelectedItemMove(from:Int,to:Int){
+    fun onSelectedItemMove(from: Int, to: Int) {
         val selectedList = selectedCategory.value.orEmpty().toMutableList()
         val item = selectedList[from]
         selectedList.removeAt(from)
-        selectedList.add(to,item)
+        selectedList.add(to, item)
         repository.saveCateoryListPrefs(selectedList)
         _selectedCategory.value = selectedList
     }
