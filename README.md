@@ -26,7 +26,8 @@ https://www.figma.com/file/MJCpnZA8XTTt3sqUWoEZOT/Untitled?type=design&node-id=0
 # Introduction
 
 - 사조참치의 매력이 담긴 동영상 플랫폼 앱.
-- 동영상 검색을 통해 본인이 원하는 영상을 찾을 수 있고 검색어 추천이나 영상 보관을 통해 편리하게 관련 영상을 찾거나 나중에 다시 시청해 볼 수 있습니다.
+- YouTube API 데이터연동을 통해 검색어를 추천받거나 본인이 원하는 영상을 찾을 수 있고  
+영상 보관을 통해 나중에 다시 시청해 볼 수 있는 애플리케이션 입니다.
 
 # Description
 
