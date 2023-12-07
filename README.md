@@ -2,6 +2,8 @@
 # Team Member
 
 임주리 김성환 임두형 이예원
+# 시연 영상
+[영상 보기]https://github.com/limduh/nb_01_introduce_myself/assets/111894739/791ea347-8cfa-4f05-ab24-eeb8969eeb1b
 
 # Wireframe
 
